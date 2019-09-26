@@ -1,5 +1,5 @@
 ---
-title: golang-concurrency-tricks
+title: Golang concurrency tricks
 date: 2019-07-11 21:35:44
 tags: [golang]
 ---

@@ -12,15 +12,18 @@ menu:
     - name: "Home"
       url: "/"
       weight: 1
+    - name: "About"
+      url: "/about/"
+      weight: 2
     - name: "Tags"
       url: "/tags/"
-      weight: 2
+      weight: 3
     - name: "Subscribe"
       url: "/index.xml"
 
 params:
   description: "Tech blog of inhzus."
-  footer: "&copy; [Inhzus](https://zsuun.com) | [Github](https://github.com/inhzus)"
+  footer: "&copy; [Inhzus](https://zsuun.com) 2019 | [Github](https://github.com/inhzus)"
 
   highlightjsVersion: "9.12.0"
   highlightjsCDN: "//cdn.bootcss.com"
