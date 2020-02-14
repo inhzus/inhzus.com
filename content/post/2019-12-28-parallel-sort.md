@@ -1,6 +1,8 @@
 ---
 title: "并行排序实验报告"
 date: 2019-12-28T23:12:33+08:00
+tags: [c++, algorithm, multi-thread]
+mathjax: true
 ---
 
 ## 概览
@@ -356,7 +358,7 @@ $n = 30000, p = 8$
 | 串行枚举排序 | 114,081,546 ns |
 | 并行枚举排序 | 30,905,422 ns  |
 
-![image-20191230174545611](2019-12-28-parallel-sort/image-20191230174545611.png)
+![image-20191230174545611.png](https://i.loli.net/2020/02/14/TbplVdFuW12sc79.png)
 
 $n=30000 \cdot 10, p=8$
 
@@ -370,7 +372,7 @@ $n=30000 \cdot 10, p=8$
 | 串行归并排序 | 22,986,012 ns |
 | 并行归并排序 | 7,071,798 ns  |
 
-![image-20191230174930744](2019-12-28-parallel-sort/image-20191230174930744.png)
+![image-20191230174930744.png](https://i.loli.net/2020/02/14/36j5dAKDimksqwB.png)
 
 ### 分析
 
