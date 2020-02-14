@@ -50,7 +50,7 @@ pros:
 
 cons:
 
-- Overview 无 app suggestions。
+- 无 app suggestions in overview。
 
 ### Rootless Pixel Launcher
 
@@ -85,6 +85,16 @@ cons:
 ### POCO Launcher
 
 貌似是小米家的，不支持 system default light/dark mode，app categories 的 tabs 太多了，还不如直接翻 drawer，有些鸡肋（也有可能我姿势不到位吧），关键问题同上。
+
+## 后续
+
+根据 [GItHub issue: Dock in overview with Android 10 gesture navigation](https://github.com/LawnchairLauncher/Lawnchair/issues/1856)，可知，目前想要实现 app suggestions in overview 需要使用 root + Magisk + QuickSwitch module。
+
+在另一 [issue](https://github.com/LawnchairLauncher/Lawnchair/issues/1885) 中提到了某种实现的可能性。
+
+## Sesame
+
+想起另一个有意思的 app：Sesame，之前在 Pixel Launcher 上使用体验极差，但集成在 third-party launcher（包括 Nova，Lawnchair，Hyperion）上，替换掉 Google Now，体验不错，至少这个位置不再是废物。
 
 ## 总结
 
