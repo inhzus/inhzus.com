@@ -101,3 +101,8 @@ cons:
 目前为止没有支持 overview app suggestions 的 third-party launcher。功能上来说，最丰富的是 Action Launcher: Pixel Edition，花里胡哨的东西很多；个人最喜欢的是 Lawnchair，对开源软件有天然好感；Hyperion 的风格眼前一亮，不过经不起细细使用。
 
 还是返回我 Pixel Launcher，期待 Google 开放更多的 API 方便开发者进一步优化。
+
+
+
+
+

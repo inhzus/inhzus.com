@@ -20,16 +20,24 @@ tags: [resume]
 
 #### 字节跳动广告投放（2019 年 7 月 ～ 2019 年 9 月）
 
-- **实习内容**：使用 Golang，参与程序化交易的相关工作，负责广告开屏控两方案的兼容支持与维护。
+- **实习内容**：使用 Golang，参与程序化交易的相关工作，负责广告开屏控量方案的兼容支持与维护。
 
 ## 项目经历
 
-#### [Go-redis-impl](https://github.com/inhzus/go-redis-impl)（2019 年 8 月 ～ ）
+#### [Regex - 正则表达式引擎](https://github.com/inhzus/regex) (2020 年 2 月 ～)
+
+- **项目内容**：使用 C++17 实现 NFA based 正则表达式引擎，功能包括解析基本语法、greedy / reluctant / possessive、named groups、look-ahead assertions、back reference、atomic group、 (shorthand)character classes 等并进行匹配。
+
+#### [Lotta - Linux 多线程网络库](https://github.com/inhzus/lotta) (2019 年 11 月 ～ 12 月)
+
+- **项目内容**：使用 C++17 实现基于 Reactor 模式的 Linux 多线程网络库，支持 TCP Server / Client、TimerQueue 和简单的 HTTP Server。使用 Apache Benchmark 测试：并发请求数略超过功能更为复杂的 nginx。实现参考陈硕的 [muduo](https://github.com/chenshuo/muduo)。
+
+#### [Go-redis-impl](https://github.com/inhzus/go-redis-impl)（2019 年 8 月 ～ 9 月）
 
 - **项目背景**：为熟悉 redis 的原理，进一步掌握实习中使用的 Go，适当简化底层数据结构进行实现。
 - **项目内容**：基于对 redis 指令的理解，部分复杂内容参考网络资源，实现了AOF/RDB，Pipeline，Transaction，Client 等功能。
 
-#### [”南京大学本科招生“官方服务号](https://github.com/inhzus/berater)（2019 年 4 月 ～ ）
+#### [”南京大学本科招生“官方服务号](https://github.com/inhzus/berater)（2019 年 4 月 ～ 12 月）
 
 - **项目内容**：独立完成后端开发。Python Flask 框架，封装微信服务号 SDK，实现使用 Token 进行多权限鉴权的无状态 Flask 插件，实现用户管理、问答系统等功能的 RESTful API，使用 docker-compose 进行部署。目前仍在维护。
 
