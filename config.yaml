@@ -6,7 +6,7 @@ preserveTaxonomyNames: true
 footnotereturnlinkcontents: "↩"
 
 permalinks:
-    post: "/post/:filename/"
+    posts: "/posts/:filename/"
 menu:
   main:
     - name: "Home"
