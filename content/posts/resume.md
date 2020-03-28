@@ -52,7 +52,7 @@ tags: [resume]
 
 ## 技能
 
-- 熟悉 C/C++，Python 编程语言，了解 Java，Golang。
+- 熟悉 C++ 编程语言，熟练使用 C、Python，了解 Java、Golang。
 - 熟悉 Unix/Linux 编程环境，掌握 git 版本控制，了解 docker 容器。
 - 熟悉基本的数据结构与算法。
 - 有良好的编程习惯，有代码洁癖，熟练查阅英文技术文档。
