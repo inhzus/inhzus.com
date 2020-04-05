@@ -1,5 +1,5 @@
 ---
-title: "并行排序实验报告"
+title: "并行排序"
 date: 2019-12-28T23:12:33+08:00
 tags: [c++, algorithm, multi-thread]
 mathjax: true
