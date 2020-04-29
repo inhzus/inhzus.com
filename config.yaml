@@ -4,6 +4,7 @@ title: "Inhzus"
 theme: "ivy"
 preserveTaxonomyNames: true
 footnotereturnlinkcontents: "↩"
+googleAnalytics: "UA-134644252-2"
 
 permalinks:
     posts: "/posts/:filename/"
