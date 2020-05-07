@@ -5,6 +5,7 @@ theme: "ivy"
 preserveTaxonomyNames: true
 footnotereturnlinkcontents: "↩"
 googleAnalytics: "UA-134644252-2"
+disableKinds: ["taxonomy","taxonomyTerm"]
 
 permalinks:
     posts: "/posts/:filename/"
@@ -18,9 +19,6 @@ menu:
       weight: 2
     - name: "Subscribe"
       url: "/index.xml"
-taxonomies:
-  tag: ""
-  category: ""
 markup:
   highlight:
     codeFences: true
