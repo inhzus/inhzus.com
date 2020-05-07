@@ -16,11 +16,11 @@ menu:
     - name: "About"
       url: "/about/"
       weight: 2
-    - name: "Tags"
-      url: "/tags/"
-      weight: 3
     - name: "Subscribe"
       url: "/index.xml"
+taxonomies:
+  tag: ""
+  category: ""
 markup:
   highlight:
     codeFences: true
