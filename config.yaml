@@ -26,6 +26,11 @@ params:
   toc: false
   googleVerification: ''
   microsoftClarity: "jt8wmngepq"
+  giscus:
+    repo: "inhzus/inhzus.com"
+    repoId: "MDEwOlJlcG9zaXRvcnkyMTExMzU3MzI="
+    category: "General"
+    categoryId: "DIC_kwDODJWs9M4CcxYg"
 mediaTypes:
   text/plain:
     suffixes:
