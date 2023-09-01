@@ -1,14 +1,14 @@
 baseurl: "https://inhzus.com"
 languageCode: "en-us"
 title: "Inhzus"
-theme: "ivy"
+theme: "carpe"
 preserveTaxonomyNames: true
 footnotereturnlinkcontents: "↩"
 googleAnalytics: "UA-134644252-2"
-disableKinds: ["taxonomy","taxonomyTerm"]
+disableKinds: ["taxonomy", "taxonomyTerm"]
 
 permalinks:
-    posts: "/posts/:filename/"
+  posts: "/posts/:filename/"
 menu:
   main:
     - name: "Home"
@@ -19,12 +19,19 @@ menu:
       weight: 2
     - name: "Subscribe"
       url: "/index.xml"
+      weight: 3
+    - name: "GitHub"
+      url: "https://github.com/inhzus"
+      weight: 4
 markup:
+  goldmark:
+    renderer:
+      unsafe: true
   highlight:
     codeFences: true
-    guessSyntax: true
-    style: github
+    noClasses: false
 
 params:
   description: "Tech blog of inhzus."
-  footer: "&copy; [Inhzus](https://zsuun.com) 2020 | [Github](https://github.com/inhzus)"
+  footer: |
+    &copy; [Inhzus](https://inhzus.io) 2020 | [Github](https://github.com/inhzus)

@@ -1,3 +1,6 @@
 [submodule "themes/ivy"]
 	path = themes/ivy
 	url = https://github.com/inhzus/hugo-ivy.git
+[submodule "themes/carpe"]
+	path = themes/carpe
+	url = https://github.com/inhzus/hugo-carpe.git
