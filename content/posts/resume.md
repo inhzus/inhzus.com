@@ -4,55 +4,56 @@ date: 2019-09-27T00:50:18+08:00
 tags: [resume]
 ---
 
-## 基本信息
+### 个人信息
 
-- Inhzus / 男 / xxxx 年 x 月
-- 联系电话：176 xxxx xxxx
+- 孙治/男/2000 年
+- 本科/南京大学·计算机科学与技术系
+- 工作时间：3 年
+- 手机：131 xxxx xxxx
+- Email：zhi.suun#gmail.com
 - GitHub：https://github.com/inhzus
-- Email: inhzus#gmail.com
 
-## 教育经历
+### 工作经历
 
-- 南京大学 / 本科 / 计算机科学与技术系
-- 2016 年 9 月 - 2020 年 7 月
+#### Shopee - Paid Ads - Search Engine (2022 年 8 月 -)
 
-## 实习经历
+- 参与 Shopee Vespa Search Engine 的开发与维护。
 
-#### 字节跳动广告投放（2019 年 7 月 ～ 2019 年 9 月）
+#### 阿里巴巴·钉钉·平台架构（2020 年 5 月 - 2022 年 7 月）
 
-- **实习内容**：使用 Golang，参与程序化交易的相关工作，负责广告开屏控量方案的兼容支持与维护。
+- 主要负责钉钉跨平台 C++ 客户端网络库 SDK 的开发。
+- 前期曾参与一些网络接入层及服务端基础设施的开发与维护。
 
-## 项目经历
+#### 字节跳动·广告投放（实习）（2019 年 7 月 - 9 月）
 
-#### [Regex - 正则表达式引擎](https://github.com/inhzus/regex) (2020 年 2 月 ～)
+- 参与程序化交易相关开发，如开屏广告控量方案等。
 
-- **项目内容**：使用 C++17 实现 NFA based 正则表达式引擎，功能包括解析基本语法、greedy / reluctant / possessive、named groups、look-ahead assertions、back reference、atomic group、 (shorthand)character classes 等并进行匹配。
+### 项目经历
 
-#### [Lotta - Linux 多线程网络库](https://github.com/inhzus/lotta) (2019 年 11 月 ～ 12 月)
+#### 钉钉 HTTP DNS 调度优化
 
-- **项目内容**：使用 C++17 实现基于 Reactor 模式的 Linux 多线程网络库，支持 TCP Server / Client、TimerQueue 和简单的 HTTP Server。使用 Apache Benchmark 测试：并发请求数略超过功能更为复杂的 nginx。实现参考陈硕的 [muduo](https://github.com/chenshuo/muduo)。
+- 负责 HTTP DNS 调度优化的项目。
 
-#### [Go-redis-impl](https://github.com/inhzus/go-redis-impl)（2019 年 8 月 ～ 9 月）
+- 实现对钉钉多种协议的探测服务（含 LWS（私有协议）/HTTP 等）并部署于边缘节点服务实时上报状态，优化 HTTP DNS 服务返回节点的有效率，预警监控各项对外服务；
 
-- **项目背景**：为熟悉 redis 的原理，进一步掌握实习中使用的 Go，适当简化底层数据结构进行实现。
-- **项目内容**：基于对 redis 指令的理解，部分复杂内容参考网络资源，实现了AOF/RDB，Pipeline，Transaction，Client 等功能。
+  在客户端实现私有协议 DNS 的优化，含自动切换容灾、支持 IPv6、私有协议降级、强制推送调度等功能。
 
-#### [”南京大学本科招生“官方服务号](https://github.com/inhzus/berater)（2019 年 4 月 ～ 12 月）
+- 上线后，多次监控避免服务不可用问题，通过多单元容灾演练，减少各接入点调度不均衡现象。
 
-- **项目内容**：独立完成后端开发。Python Flask 框架，封装微信服务号 SDK，实现使用 Token 进行多权限鉴权的无状态 Flask 插件，实现用户管理、问答系统等功能的 RESTful API，使用 docker-compose 进行部署。目前仍在维护。
+#### 钉钉客户端弱网优化
 
-#### [OptAdvisor 投顾系统](https://github.com/pufferfist/OptAdvisor)（2018 年 7 月 ～ 2018 年 10 月）
+- 钉钉客户端弱网优化主要开发。
+- 方案以多协议通道、多网卡重试的方式提高弱网场景下的成功率。实现基于 QUIC/私有协议等的多种转发通道，实现跨平台网卡绑定。此外打通客户端单测、集成测试、系统测试流程，提高交付稳定性。
+- 完成较高丢包率下发消息体验显著提升，大优于各项竞品。
 
-- **项目贡献**：承担项目后端除核心算法外的整体设计与开发。使用 Spring Boot 作为后端框架，使用 Apache Shiro 用于用户鉴权，设计并实现 RESTful API，以供前端与安卓端适配使用。
-- **项目成绩**：第十四届”花旗杯“金融创新应用大赛二等奖。
+#### 钉钉语音转文字成本优化
 
-#### [TinySTL](https://github.com/inhzus/tinySTL)（2017 年 12 月 ～ 2018 年 3 月）
+- 负责语音转文字中台成本优化的项目。
+- 梳理各个调用来源，通过 redis、数据库，及消息队列重定向的方法，减少重复调用。借此提高全链路异常诊断时效，5 分钟内定位用户问题。
+- 经优化，调用上游 AI 服务成本优化 30% 以上。
 
-- **项目内容**：个人项目。参考 SGI STL 与 VS 2017 的相关源文件实现了 STL 中的 reverse_iterator, container (vector, list unordered_map, string)，以及部分 memory, functional, algorithm, type_traits。使用 Google Test 进行单元测试。
+### 技能清单
 
-## 技能
-
-- 熟悉 C++ 编程语言，熟练使用 C、Python，了解 Java、Golang。
-- 熟悉 Unix/Linux 编程环境，掌握 git 版本控制，了解 docker 容器。
-- 熟悉基本的数据结构与算法。
-- 有良好的编程习惯，有代码洁癖，熟练查阅英文技术文档。
+- 熟悉 C++ 编程语言；
+- 熟悉 Unix 编程环境，了解 docker 容器等；
+- 有良好编程习惯，熟练查阅技术文档。
