@@ -5,7 +5,7 @@ theme: "carpe"
 preserveTaxonomyNames: true
 footnotereturnlinkcontents: "↩"
 googleAnalytics: "G-Q9FKTCTEEV"
-disableKinds: ["taxonomy", "taxonomyTerm"]
+disableKinds: ["taxonomy", "term"]
 
 permalinks:
   posts: "/posts/:filename/"
