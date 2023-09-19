@@ -1,7 +1,6 @@
 ---
 title: "Merge Multiple Static Libraries into One"
 date: 2023-09-19T18:16:45+08:00
-draft: true
 ---
 
 ## Multiple Static -> Static
