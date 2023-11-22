@@ -2,6 +2,7 @@
 title: XPS-9360 安装 Linux 的体验
 date: 2019-06-17 00:12:31
 tags: [Linux, Configuration]
+description: 在 XPS-9360 上安装各个 Linux 发行版的体验
 ---
 
 # 起因

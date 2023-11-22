@@ -2,6 +2,7 @@
 title: "C++ 设计模式"
 date: 2020-05-25T17:03:18+08:00
 toc: true
+description: C++ 设计模式 Wiki 翻译
 ---
 
 注：一直不能把四人帮的设计模式看完，翻译一篇简短的 [wiki](https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns) 帮助理解。

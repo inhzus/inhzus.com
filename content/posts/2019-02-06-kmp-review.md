@@ -1,8 +1,9 @@
 ---
 title: KMP 算法回顾
 date: 2019-02-06 13:49:22
-tags: Algorithm
+tags: [Algorithm]
 mathjax: true
+description: "回顾 KMP 算法实现的重点"
 ---
 
 记得系统学习 KMP 算法的时候是在大二的算法课上, 当时印象中掌握的是不错的, 不过时隔一年, 遇到 leetcode  implement-strstr 一题需要用到 KMP 时, 居然理解上有些困难. 在这里回顾一下实现的重点.

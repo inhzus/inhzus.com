@@ -2,6 +2,7 @@
 title: 大四开始时的琐事
 date: 2019-09-27 10:57:49+08:00
 tags: [linux, multi-thread, c++]
+description: 大四开学之后我经历的一些琐事
 ---
 
 很久不写博客，聊聊最近的历程。

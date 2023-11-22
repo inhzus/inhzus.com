@@ -2,6 +2,7 @@
 title: "Resume"
 date: 2019-09-27T00:50:18+08:00
 tags: [resume]
+description: inhzus resume
 ---
 
 ### 个人信息

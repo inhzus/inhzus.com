@@ -1,38 +1,105 @@
-baseurl: "https://inhzus.com"
-languageCode: "en-us"
-title: "Inhzus"
-theme: "carpe"
-preserveTaxonomyNames: true
-footnotereturnlinkcontents: "↩"
+baseURL: https://example.com
+defaultContentLanguage: en
+defaultContentLanguageInSubdir: false
+title: inhzus.io
+theme: futu
+enableRobotsTXT: true
+enableEmoji: true
+enableGitInfo: true
+hasCJKLanguage: true
 googleAnalytics: "G-Q9FKTCTEEV"
-disableKinds: ["taxonomy", "term"]
-
-permalinks:
-  posts: "/posts/:filename/"
-menu:
-  main:
-    - name: "Home"
-      url: "/"
-      weight: 1
-    - name: "About"
-      url: "/about/"
-      weight: 2
-    - name: "Subscribe"
-      url: "/index.xml"
-      weight: 3
-    - name: "GitHub"
-      url: "https://github.com/inhzus"
-      weight: 4
+imaging:
+  quality: 75
+sitemap:
+  changefreq: weekly
+  priority: 0.5
+  filename: sitemap.xml
+params:
+  author:
+    name: inhzus
+  keywords: []
+  description: ''
+  ampLogo: ''
+  since: '2019'
+  paginate: 100
+  dateFormatToUse: 01/02/2006
+  toc: false
+  googleVerification: ''
+  git:
+    repo: 'https://github.com/inhzus/inhzus.com'
+    branch: main
+  microsoftClarity: "jt8wmngepq"
+mediaTypes:
+  text/plain:
+    suffixes:
+      - md
+outputFormats:
+  Markdown:
+    mediaType: text/markdown
+    isPlainText: true
+    isHTML: false
+outputs:
+  home:
+    - HTML
+    - RSS
+  page:
+    - HTML
+    - AMP
+    - Markdown
+  section:
+    - HTML
+    - RSS
+  taxonomy:
+    - HTML
+    - RSS
 markup:
+  tableOfContents:
+    startLevel: 2
   goldmark:
     renderer:
       unsafe: true
+    parser:
+      wrapStandAloneImageWithinParagraph: false
   highlight:
+    # anchorLineNos: true
     codeFences: true
+    # guessSyntax: true
+    # hl_Lines: ''
+    # lineAnchors: ''
+    # lineNoStart: 1
+    # lineNos: false
+    # lineNumbersInTable: false
     noClasses: false
-
-params:
-  description: "Tech blog of inhzus."
-  footer: |
-    &copy; [Inhzus](https://inhzus.io) 2020 | [Github](https://github.com/inhzus)
-  microsoftClarity: "jt8wmngepq"
+    # noHl: false
+    # style: monokai
+    # tabWidth: 2
+languages:
+  zh-CN:
+    disabled: true
+    title: Inhzus
+    languageCode: zh-CN
+    languageName: 简体中文
+    menu:
+      main:
+        - name: 首页
+          weight: 10
+          identifier: home
+          url: /
+        - name: 关于
+          weight: 30
+          identifier: about
+          url: /about/
+  en:
+    title: Inhzus
+    languageCode: en
+    languageName: English
+    menu:
+      main:
+        - name: Home
+          weight: 10
+          identifier: home
+          url: /
+        - name: About
+          weight: 30
+          identifier: about
+          url: /about/

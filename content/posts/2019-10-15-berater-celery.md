@@ -1,6 +1,7 @@
 ---
 title: "Celery 集成"
 date: 2019-10-15T15:11:31+08:00
+description: 在微信服务号后端项目中集成 Celery
 ---
 
 这篇聊聊在微信服务号后端项目中集成 Celery。

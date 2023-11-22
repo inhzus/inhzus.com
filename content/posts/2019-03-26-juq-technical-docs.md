@@ -2,6 +2,7 @@
 title: Juq Technical Documentation
 date: 2019-03-26 14:17:42
 tags: [Python, Tech, Juq]
+description: Some exellent technical practice in the development of juq library
 ---
 
 Some exellent technical practice in the development of [Juq](https://github.com/inhzus/juq).

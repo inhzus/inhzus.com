@@ -2,6 +2,7 @@
 title: Hadoop 2.7.1 ECS 单机伪分布配置
 date: 2019-03-31 15:10:41
 tags: [Hadoop, Configuration, Linux]
+description: 在 ECS 单机上伪分布配置 Hadoop 2.7.1
 ---
 
 Hadoop 2.7.1 ECS 单机伪分布配置

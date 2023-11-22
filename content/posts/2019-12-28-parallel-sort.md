@@ -3,6 +3,7 @@ title: "并行排序"
 date: 2019-12-28T23:12:33+08:00
 tags: [c++, algorithm, multi-thread]
 mathjax: true
+description: C++ 实现各种基础的并行排序算法
 ---
 
 ## 概览

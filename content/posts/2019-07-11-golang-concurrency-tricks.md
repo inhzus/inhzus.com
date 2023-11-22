@@ -2,6 +2,7 @@
 title: Golang concurrency tricks
 date: 2019-07-11 21:35:44
 tags: [golang]
+description: 一些 golang 并发编程的技巧
 ---
 
 看了一些 goroutine 的 patterns，（今天）觉得 goroutine 用起来是一种很爽的感觉

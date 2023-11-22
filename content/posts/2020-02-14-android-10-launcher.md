@@ -2,6 +2,7 @@
 title: "Android 10 Launcher"
 date: 2020-02-14T15:52:34+08:00
 tags: [android]
+description: "Android 10 各式 Launcher 尝鲜"
 ---
 
 过去将所有 Icon 不支持 i18n 的 App （大部分也都是毒瘤软件）放入冰箱，Drawer 中的 Icon 风格比较统一好看，最近开始使用”钱迹“，使用频率比较高，放入冰箱极不方便，遂打算找一支持 Rename Icon、且功能和使用与 Pixel Launcher 基本一致的 Launcher。以下为折腾记录。
