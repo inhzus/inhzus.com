@@ -1,4 +1,4 @@
-baseURL: https://example.com
+baseURL: https://inhzus.io
 defaultContentLanguage: en
 defaultContentLanguageInSubdir: false
 title: inhzus.io
@@ -72,6 +72,10 @@ languages:
           weight: 10
           identifier: home
           url: /
+        - name: 归档
+          weight: 20
+          identifier: posts
+          url: /posts/
         - name: 关于
           weight: 30
           identifier: about
@@ -86,6 +90,10 @@ languages:
           weight: 10
           identifier: home
           url: /
+        - name: Posts
+          weight: 20
+          identifier: posts
+          url: /posts/
         - name: About
           weight: 30
           identifier: about
