@@ -15,6 +15,8 @@ date: 2019-09-27T00:17:25+08:00
 
 - [GitHub](https://github.com/inhzus)
 
+- [stats.fm](https://stats.fm/inhzus)
 
+<br/>
 
 谢谢你浏览我的博客。

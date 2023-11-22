@@ -22,12 +22,9 @@ params:
   ampLogo: ''
   since: '2019'
   paginate: 100
-  dateFormatToUse: 01/02/2006
+  dateFormatToUse: Jan 2, 2006
   toc: false
   googleVerification: ''
-  git:
-    repo: 'https://github.com/inhzus/inhzus.com'
-    branch: main
   microsoftClarity: "jt8wmngepq"
 mediaTypes:
   text/plain:
@@ -61,18 +58,8 @@ markup:
     parser:
       wrapStandAloneImageWithinParagraph: false
   highlight:
-    # anchorLineNos: true
     codeFences: true
-    # guessSyntax: true
-    # hl_Lines: ''
-    # lineAnchors: ''
-    # lineNoStart: 1
-    # lineNos: false
-    # lineNumbersInTable: false
     noClasses: false
-    # noHl: false
-    # style: monokai
-    # tabWidth: 2
 languages:
   zh-CN:
     disabled: true
