@@ -20,7 +20,9 @@ XMake supports merging static libraries: [Ref](https://xmake.io/#/guide/project_
 
 ## Multiple Static -> Shared
 
-There was a CMake snippet which is a cross-platform solution on gist. Unfortunately cannot be found again.
+<del>There was a CMake snippet which is a cross-platform solution on gist. Unfortunately cannot be found again.</del>
+
+Now CMake provides a generator expression, [LINK_GROUP](https://cmake.org/cmake/help/latest/variable/CMAKE_LINK_GROUP_USING_FEATURE.html#predefined-features), to solve this issue. 🎉
 
 ```
 MSVC: /WHOLE_ARCHIVE
