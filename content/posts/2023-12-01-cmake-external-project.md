@@ -1,7 +1,7 @@
 ---
-title: "CMake: How to build external projects and use as an imported target"
+title: "CMake: How to build external projects and use as imported targets"
 date: 2023-12-01T12:15:31+08:00
-description: "CMake: How to build external projects and use as an imported target"
+description: "CMake: How to build external projects and use as imported targets"
 ---
 
 ## Intro
