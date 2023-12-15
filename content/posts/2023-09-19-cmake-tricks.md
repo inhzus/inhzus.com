@@ -1,7 +1,7 @@
 ---
 title: "C++ Build / CMake Tricks"
 date: 2023-09-19T18:16:45+08:00
-tags: [C++]
+tags: [C++, CMake]
 description: Tricks around C++ building and CMake
 ---
 
