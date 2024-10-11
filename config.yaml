@@ -31,6 +31,9 @@ params:
     repoId: "MDEwOlJlcG9zaXRvcnkyMTExMzU3MzI="
     category: "General"
     categoryId: "DIC_kwDODJWs9M4CcxYg"
+  follow:
+    feedId: "67389382546394112"
+    userId: "43486084483263488"
 mediaTypes:
   text/plain:
     suffixes:
