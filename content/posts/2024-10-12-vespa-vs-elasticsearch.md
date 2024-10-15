@@ -12,7 +12,7 @@ toc: true
 
 Vespa 有两种索引模式，一种为 index，适合文本检索，支持 tokenizer/stemming/normalization，与 ES keyword 类型类似的会构建倒排索引；另一种为 attribute，是全内存的列存索引结构，以 local docId 为序存于 RCU Vector 中，打开配置后会在内存中构建 B-Tree 倒排。
 
-除了 index 和 attribute 两种列存索引，Vespa 还有类似于 ES 中 stored fields 的行存正排：document store（配置 summary 时生效）。文档被顺序写入磁盘中，随着文件大小的增长分割为多份（默认不大于 1G）。
+除了 index 和 attribute 两种列存索引，Vespa 还有类似于 ES 中 stored fields 的行存正排：document store。文档被顺序写入磁盘中，随着文件大小的增长分割为多份（默认不大于 1G）。
 
 Vespa 的 index 由一份 memory index 和一份以上 immutable disk index 组成，文档更新会立刻作用于 memory index。Memory index 会不定期 flush 至磁盘，随后和 primary disk index 合并（称为 fusion）形成新的 disk index。在搜索时，memory index 和 disk index 都会被检索。[^3]
 
@@ -63,9 +63,7 @@ TBC
 
 
 [^1]: [知乎 Lucene 解析](https://zhuanlan.zhihu.com/p/35469104)
-
 [^2]: [Elastic: Near real-time search](https://www.elastic.co/guide/en/elasticsearch/reference/current/near-real-time.html)
-
 [^3]: [Vespa: Index](https://docs.vespa.ai/en/proton.html#index)
 [^4]: [Vespa Slack: Performance of Fusion](https://vespatalk.slack.com/archives/C01QNBPPNT1/p1728892957219879)
 [^5]: [Elastic: Merge](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-merge.html)
@@ -77,6 +75,4 @@ TBC
 [^11]: [Vespa: ANN Search using HNSW](https://docs.vespa.ai/en/approximate-nn-hnsw.html)
 [^12]: [GitHub: Dense Vector Ranking Performance](https://github.com/jobergum/dense-vector-ranking-performance)
 [^13]: [Elastic: Vector Search in Elasticsearch](https://www.elastic.co/search-labs/blog/vector-search-elasticsearch-rationale)
-
-
 
