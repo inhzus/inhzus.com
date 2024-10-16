@@ -4,13 +4,13 @@ date: 2024-10-12T17:33:53+08:00
 toc: true
 ---
 
-在这家公司做了两年 Vespa 相关开发后，当被问到 Vespa 相比 Elasticsearch 的优势时，我居然很茫然。于是又重新好好地梳理了下 vespa 的逻辑，参照之前了解的 ES（Elasticsearch）的一些概念，记录下这篇文章来总结这两者的区别。
+在这家公司做了两年 Vespa 相关开发后，当被问到 Vespa 相比 Elasticsearch 的优势时，我居然很茫然。于是又重新好好地梳理了下 Vespa 的逻辑，参照之前了解的 ES（Elasticsearch）的一些概念，记录下这篇文章来总结这两者的区别。
 
 ## 真正的实时更新
 
-在 lucene 中，一个 index 由多个 segments 组成。[^1] 在添加一个新的文档时，会先写入内存中的 buffer，在一定时间后，写入 filesystem cache 后再 flush 至磁盘。在写入 filesystem cache 之前，新添加的文档是不可被搜的。在有搜索请求时，ES 每一秒会把内存中的文档写入文件。 [^2] 
+在 lucene 中，一个 index 由多个 segments 组成。[^1] 新的文档会先写入内存中的 buffer，一定时间后，写入 filesystem cache 后再 flush 至磁盘。新添加的文档是不可被搜的，直至写入 filesystem cache。有检索请求时，内存中文档 flush 至文件的频率默认为 1s。 [^2] 
 
-Vespa 有两种索引模式，一种为 index，适合文本检索，支持 tokenizer/stemming/normalization，与 ES keyword 类型类似的会构建倒排索引；另一种为 attribute，是全内存的列存索引结构，以 local docId 为序存于 RCU Vector 中，打开配置后会在内存中构建 B-Tree 倒排。
+Vespa 有两种索引模式，一种为 index，适合文本检索，支持 tokenizer / stemming / normalization，与 ES keyword 类型类似的会构建倒排索引；另一种为 attribute，是全内存的列存索引结构，以 local docId 为序存于 RCU Vector 中，打开某项配置后会在内存中构建 B-Tree 倒排。
 
 除了 index 和 attribute 两种列存索引，Vespa 还有类似于 ES 中 stored fields 的行存正排：document store。文档被顺序写入磁盘中，随着文件大小的增长分割为多份（默认不大于 1G）。
 
