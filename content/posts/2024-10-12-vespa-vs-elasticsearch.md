@@ -1,6 +1,6 @@
 ---
 title: "Vespa 详解及对比 Elasticsearch"
-date: 2024-10-12T17:33:53+08:00
+date: 2024-10-15T22:33:53+08:00
 toc: true
 ---
 
