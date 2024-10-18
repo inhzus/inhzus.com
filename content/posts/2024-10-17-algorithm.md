@@ -112,23 +112,7 @@ class PriorityQueue {
     std::swap(data_.front(), data_.back());
     int val = data_.back();
     data_.pop_back();
-
-    size_t idx = 0;
-    while (idx < data_.size()) {
-      size_t child = 2 * idx + 1;
-      if (child >= data_.size()) {
-        break;
-      }
-      if (child + 1 < data_.size() && data_[child] < data_[child + 1]) {
-        child += 1;
-      }
-      if (data_[child] < data_[idx]) {
-        break;
-      }
-      std::swap(data_[idx], data_[child]);
-      idx = child;
-    }
-
+    siftDown(0);
     return val;
   }
 };
