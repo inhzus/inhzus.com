@@ -117,3 +117,65 @@ class PriorityQueue {
   }
 };
 ```
+
+## SharedPtr
+
+```C++
+template <typename T>
+class SharedPtr {
+ public:
+  explicit SharedPtr(T *ptr) : ptr_{ptr}, cnt_(nullptr) {
+    if (ptr_ != nullptr) {
+      cnt_ = new size_t(1);
+    }
+  }
+
+  SharedPtr(const SharedPtr &other) {
+    ptr_ = other.ptr_;
+    cnt_ = other.cnt_;
+    increaseRef();
+  }
+  ~SharedPtr() {
+    decreaseRef();
+  }
+
+  SharedPtr &operator=(const SharedPtr &other) {
+    if (&other == this) {
+      return *this;
+    }
+    decreaseRef();
+    ptr_ = other.ptr_;
+    cnt_ = other.cnt_;
+    increaseRef();
+    return *this;
+  }
+
+  T *get() { return ptr_; }
+  T *operator->() { return ptr_; }
+  T &operator*() { return *ptr_; }
+
+ private:
+  void increaseRef() {
+    if (ptr_ != nullptr) {
+      ++*cnt_;
+    }
+  }
+  void decreaseRef() {
+    if (ptr_ == nullptr) {
+      return;
+    }
+    if (--*cnt_ == 0) {
+      delete ptr_;
+      delete cnt_;
+    }
+  }
+
+  T *ptr_;
+  size_t *cnt_;  // maybe atomic
+};
+```
+
+## Related Leetcode Blogs
+
+Stock Problem: https://labuladong.online/algo/dynamic-programming/stock-problem-summary/
+
