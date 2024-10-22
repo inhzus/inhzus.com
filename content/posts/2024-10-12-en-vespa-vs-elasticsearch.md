@@ -19,11 +19,11 @@ A Vespa index consists of a **memory index** and one or more immutable **disk in
 
 This leads to a question: While the number of segments stored in Lucene can reach hundreds, Vespa typically only has one or two disk indexes. Does this mean that the fusion process in Vespa is too costly and affects performance? The answer is no:[^4]
 
-	•	Vespa can control the number of threads used for feeding, reducing the impact on searching.
-	•	Lucene segments are row-based, while Vespa is column-based, with each field having its own memory/disk index.
-	•	Lucene rewrites a large amount of data during segment merges, whereas in Vespa, due to the sorted nature of its inverted index and dictionary, the operations are mostly sequential reads and writes, making them much less costly (this will be explained in more detail later).
-	•	Document updates are always written to memory first, reducing garbage collection and document merge frequency.
-	•	Too many segments lead to more merges for the same document, increasing I/O operations.
+- Vespa can control the number of threads used for feeding, reducing the impact on searching.
+- Lucene segments are row-based, while Vespa is column-based, with each field having its own memory/disk index.
+- Lucene rewrites a large amount of data during segment merges, whereas in Vespa, due to the sorted nature of its inverted index and dictionary, the operations are mostly sequential reads and writes, making them much less costly (this will be explained in more detail later).
+- Document updates are always written to memory first, reducing garbage collection and document merge frequency.
+- Too many segments lead to more merges for the same document, increasing I/O operations.
 
 In contrast, having fewer indexes in Vespa results in higher query efficiency compared to Lucene.
 
