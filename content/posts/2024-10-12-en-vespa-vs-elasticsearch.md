@@ -1,5 +1,5 @@
 ---
-title: "Implementation of Vespa and Its Comparison with Elasticsearch"
+title: "Implementation of Vespa & Vespa vs Elasticsearch"
 date: 2024-10-15T22:33:53+08:00
 toc: true
 vice: true
