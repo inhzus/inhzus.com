@@ -215,7 +215,7 @@ Memory index 的数据结构非常类似于 attribute 中的 MultiValue-String-F
 
 <img src="https://s2.loli.net/2024/11/20/iJIubfwGPjq7RBh.jpg" alt="memory-index.drawio.jpg" style="zoom:25%;" />
 
-#### Disk Index
+### Disk Index
 
 - Disk index 等价于 memory index 的 EnumStore 在磁盘中的结构等价于七层跳表；
   - 跳表的最上层，文件名以 ssdat 结尾，会被全量加载至内存中；
