@@ -11,7 +11,7 @@ After two years of Vespa-related development at this company, I was surprisingly
 
 In Lucene, an **index** consists of multiple segments.[^1] New documents are first written to an in-memory buffer and then flushed to disk after a certain period of time once they are written to the filesystem cache. Newly added documents cannot be searched until they are written to the filesystem cache. During a search request, the in-memory documents are flushed to files with the default flush frequency being 1 second.[^2]
 
-Vespa has two types of index modes. One is called **index**, which is suitable for text search, supporting tokenizer, stemming, and normalization. It builds an inverted index similar to the keyword type in ES. The other is called **attribute**, which is a fully in-memory columnar index structure, stored in order by local docId in an RCU vector. When certain configurations are enabled, a B-Tree inverted index is built in memory.
+Vespa has two types of index modes. One is called **index**, which is suitable for text search, supporting tokenizer, stemming, and normalization. It builds an inverted index similar to the keyword type in ES. The other is called **attribute**, which is a fully in-memory columnar index structure, stored in order by local docId in an RCU vector. When certain configurations are enabled, an inverted index is built in memory.
 
 In addition to the columnar indexes of index and attribute, Vespa also has a row-based forward index similar to stored fields in ES: the document store. Documents are written sequentially to disk and split into multiple parts as the file size grows (with a default size limit of 1GB).
 

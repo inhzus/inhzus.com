@@ -10,7 +10,7 @@ toc: true
 
 在 lucene 中，一个 index 由多个 segments 组成。[^1] 新的文档会先写入内存中的 buffer，一定时间后，写入 filesystem cache 后再 flush 至磁盘。新添加的文档是不可被搜的，直至写入 filesystem cache。有检索请求时，内存中文档 flush 至文件的频率默认为 1s。 [^2] 
 
-Vespa 有两种索引模式，一种为 index，适合文本检索，支持 tokenizer / stemming / normalization，与 ES keyword 类型类似的会构建倒排索引；另一种为 attribute，是全内存的列存索引结构，以 local docId 为序存于 RCU Vector 中，打开某项配置后会在内存中构建 B-Tree 倒排。
+Vespa 有两种索引模式，一种为 index，适合文本检索，支持 tokenizer / stemming / normalization，与 ES keyword 类型类似的会构建倒排索引；另一种为 attribute，是全内存的列存索引结构，以 local docId 为序存于 RCU Vector 中，打开某项配置后会在内存中构建倒排。
 
 除了 index 和 attribute 两种列存索引，Vespa 还有类似于 ES 中 stored fields 的行存正排：document store。文档被顺序写入磁盘中，随着文件大小的增长分割为多份（默认不大于 1G）。
 
