@@ -1,6 +1,6 @@
 ---
 title: "Vespa 索引结构实现"
-date: 2024-12-04T16:30:00+08:00
+date: 2024-12-02T16:30:00+08:00
 mathjax: true
 toc: true
 ---
