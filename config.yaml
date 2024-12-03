@@ -49,7 +49,6 @@ outputs:
     - RSS
   page:
     - HTML
-    - AMP
     - Markdown
   section:
     - HTML
