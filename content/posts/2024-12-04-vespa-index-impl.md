@@ -5,7 +5,7 @@ mathjax: true
 toc: true
 ---
 
-[上一文](/posts/2024-10-12-vespa-vs-elasticsearch/)大概讲述了 Vespa 与 ElasticSearch 的区别，本文具体展开讲述 Vespa 的索引实现，主要聚焦于数据结构。下篇[Vespa 索引检索实现](/posts/2024-11-20-vespa-match-impl/)中会详细讲述如何使用这些数据结构进行检索。
+[上一文](/posts/2024-10-12-vespa-vs-elasticsearch/)大概讲述了 Vespa 与 ElasticSearch 的区别，本文具体展开讲述 Vespa 的索引实现，主要聚焦于数据结构。下篇[Vespa 索引检索实现](/posts/2024-12-05-vespa-match-impl/)中会详细讲述如何使用这些数据结构进行检索。
 
 ## 倒排索引的底层数据结构
 
