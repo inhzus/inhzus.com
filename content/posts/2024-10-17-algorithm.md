@@ -1,6 +1,7 @@
 ---
 title: "Algorithm: Back to Basic"
 date: 2024-10-17T21:53:00+08:00
+draft: true
 ---
 
 Back to basic!
