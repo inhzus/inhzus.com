@@ -15,7 +15,9 @@ description: inhzus resume
 
 ### 工作经历
 
-#### Shopee - Search & PaidAds & Rcmd - Search Engine (2022 年 8 月 -)
+#### 字节跳动 - 搜索架构（2025 年 1 月 -）
+
+#### Shopee - Search & PaidAds & Rcmd - Search Engine (2022 年 8 月 - 2024 年 12 月)
 
 - 参与 Shopee Vespa Search Engine 的开发与维护。
 
