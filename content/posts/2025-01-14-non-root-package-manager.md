@@ -135,7 +135,7 @@ tar -xvjf gcc-${gcc_version}.tar.bz2
 cd gcc-${gcc_version}
 ./contrib/download_prerequisites
 mkdir build && cd build
-../configure --prefix=$HOME/.local/bin/opt/gcc-${gcc_version} --enable-languages=c,c++ --disable-multilib
+../configure --prefix=$HOME/.local/opt/gcc-${gcc_version} --enable-languages=c,c++ --disable-multilib
 make -j 16 && make install  # 30 min - 90 min
 
 # Build llvm with installed gcc
