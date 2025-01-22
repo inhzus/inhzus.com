@@ -125,54 +125,105 @@ class PriorityQueue {
 template <typename T>
 class SharedPtr {
  public:
-  explicit SharedPtr(T *ptr) : ptr_{ptr}, cnt_(nullptr) {
-    if (ptr_ != nullptr) {
-      cnt_ = new size_t(1);
+  explicit SharedPtr(T *data) : data_(data), cnt_(nullptr) {
+    if (data_ != nullptr) {
+      cnt_ = new std::atomic<size_t>(1);
     }
   }
+  ~SharedPtr() { decreaseRef(); }
 
-  SharedPtr(const SharedPtr &other) {
-    ptr_ = other.ptr_;
-    cnt_ = other.cnt_;
+  SharedPtr(const SharedPtr &other) : data_(other.data_), cnt_(other.cnt_) {
     increaseRef();
   }
-  ~SharedPtr() {
-    decreaseRef();
-  }
-
   SharedPtr &operator=(const SharedPtr &other) {
-    if (&other == this) {
+    if (this == &other) {
       return *this;
     }
     decreaseRef();
-    ptr_ = other.ptr_;
+    data_ = other.data_;
     cnt_ = other.cnt_;
     increaseRef();
     return *this;
   }
 
-  T *get() { return ptr_; }
-  T *operator->() { return ptr_; }
-  T &operator*() { return *ptr_; }
+  SharedPtr(SharedPtr &&other) noexcept : data_(other.data_), cnt_(other.cnt_) {
+    other.data_ = nullptr;
+    other.cnt_ = nullptr;
+  }
+  SharedPtr &operator=(SharedPtr &&other) noexcept {
+    if (this == &other) {
+      return *this;
+    }
+    data_ = other.data_;
+    cnt_ = other.cnt_;
+    other.data_ = nullptr;
+    other.cnt_ = nullptr;
+    return *this;
+  }
+
+  T *get() { return data_; }
+  T *operator->() { return data_; }
+  T &operator*() { return *data_; }
 
  private:
   void increaseRef() {
-    if (ptr_ != nullptr) {
-      ++*cnt_;
+    if (data_ == nullptr) {
+      return;
     }
+    ++*cnt_;
   }
   void decreaseRef() {
-    if (ptr_ == nullptr) {
+    if (data_ == nullptr) {
       return;
     }
     if (--*cnt_ == 0) {
-      delete ptr_;
       delete cnt_;
+      delete data_;
     }
   }
 
-  T *ptr_;
-  size_t *cnt_;  // maybe atomic
+  T *data_;
+  std::atomic<size_t> *cnt_;
+};
+
+```
+
+## LRUCache
+
+```C++
+template <typename K, typename V>
+class LRUCache {
+ public:
+  explicit LRUCache(size_t capacity) : capacity_(capacity) {}
+
+  void Put(K key, const V &value) {
+    const auto it = map_.find(key);
+    if (it == map_.end()) {
+      if (list_.size() == capacity_) {
+        map_.erase(list_.back().first);
+        list_.pop_back();
+      }
+      list_.emplace_front(key, value);
+      map_.emplace(key, list_.begin());
+    } else {
+      it->second->second = value;
+      list_.splice(list_.begin(), list_, it->second);
+    }
+  }
+  bool Get(K key, V *value) {
+    const auto it = map_.find(key);
+    if (it == map_.end()) {
+      return false;
+    }
+    *value = it->second->second;
+    list_.splice(list_.begin(), list_, it->second);
+    return true;
+  }
+
+ private:
+  std::list<std::pair<K, V>> list_;
+  std::unordered_map<K, typename std::list<std::pair<K, V>>::iterator> map_;
+  size_t capacity_;
 };
 ```
 
