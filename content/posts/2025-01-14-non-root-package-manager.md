@@ -143,10 +143,10 @@ cmake llvm \
     -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" \
-    -DCMAKE_C_COMPILER="$HOME/.local/opt/gcc-7.4/bin/gcc" \
-    -DCMAKE_CXX_COMPILER="$HOME/.local/opt/gcc-7.4/bin/g++" \
-    -DLLVM_LOCAL_RPATH="$HOME/.local/opt/gcc-7.4/lib64" \
-    -DCMAKE_CXX_LINK_FLAGS="-Wl,-rpath,$HOME/.local/opt/gcc-7.4/lib64 -L$HOME/.local/opt/gcc-7.4/lib64" \
+    -DCMAKE_C_COMPILER="$HOME/.local/opt/gcc-7.4.0/bin/gcc" \
+    -DCMAKE_CXX_COMPILER="$HOME/.local/opt/gcc-7.4.0/bin/g++" \
+    -DLLVM_LOCAL_RPATH="$HOME/.local/opt/gcc-7.4.0/lib64" \
+    -DCMAKE_CXX_LINK_FLAGS="-Wl,-rpath,$HOME/.local/opt/gcc-7.4.0/lib64 -L$HOME/.local/opt/gcc-7.4.0/lib64" \
     -DCMAKE_INSTALL_PREFIX="~/.local/opt/llvm-19.1"
 # LLVM_ENABLE_PROJECTS: clang;clang-tools-extra for clangd & clang-tidy
 # LLVM_LOCAL_RPATH: CMake will add this absolute path to rpath
