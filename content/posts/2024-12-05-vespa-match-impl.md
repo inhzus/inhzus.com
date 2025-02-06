@@ -62,7 +62,7 @@ uint32_t MatchThread::inner_match_loop(Context &context, MatchTools &tools, Doci
 ```C++
 // strict
 void BitVectorIteratorStrictT::doSeek(uint32_t docId) {
-	docId = getNextBit(docId);
+  docId = getNextBit(docId);
   this->setDocId(docId);
 }
 // non-strict
@@ -172,8 +172,8 @@ DocumentMetaStore 中以 BitVector 的形式存储正在使用的 local id（即
 
 ```C++
 void SourceBlenderSearch::doSeek(uint32_t docId) {
-	Source sourceId = this->sourceSelector->getSource(docId);
-	this->matchedChild = this->sources[sourceId];
+  Source sourceId = this->sourceSelector->getSource(docId);
+  this->matchedChild = this->sources[sourceId];
   if (this->matchedChild->seek(docId)) {
     setDocId(docId);
   }
