@@ -40,11 +40,11 @@ Lucene 不存在真正的 partial update，segments 均是 immutable。[^5] 更�
 
 Vespa 的三种存储形态中，index，attribute 为内存中更新，定期 flush 至内存。document store 不涉及倒排检索，需要顺序写入更新后文档的全部字段。
 
-## 稀疏向量性能
+## 向量性能
 
-Lucene 的稀疏向量（dense vector）和其余类型一样，分布存在多个 segments 中，自然地，为此每次合并 segments 都需要重新计算 HNSW 图，而每次搜索也需要在多个 segments 上计算 HNSW 后再合并，带来了额外的开销。[^13]
+Lucene 的向量（dense vector）和其余类型一样，分布存在多个 segments 中，自然地，为此每次合并 segments 都需要重新计算 HNSW 图，而每次搜索也需要在多个 segments 上计算 HNSW 后再合并，带来了额外的开销。[^13]
 
-稀疏向量（tensor）在 Vespa 中是第一公民，在内存中生成 HNSW 图，存储全部文档的向量，[^11] 在性能上显然比 ES 更快。[^12] 但由于 ES 的向量存储在磁盘上，而 Vespa 只能全量放在内存中，不能支持大于内存的向量空间的查询。
+向量（tensor）在 Vespa 中是第一公民，在内存中生成 HNSW 图，存储全部文档的向量，[^11] 在性能上显然比 ES 更快。[^12] 但由于 ES 的向量存储在磁盘上，而 Vespa 只能全量放在内存中，不能支持大于内存的向量空间的查询。
 
 ## 多线程查询
 
