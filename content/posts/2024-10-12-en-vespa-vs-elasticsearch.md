@@ -41,11 +41,11 @@ Lucene does not have true partial updates, as segments are immutable.[^5] When a
 
 Among Vespa’s three storage types, index and attribute are updated in memory and periodically flushed. The document store does not involve inverted index search and requires sequential writing of all fields of the updated document.
 
-## Sparse Vector Performance
+## Vector Performance
 
-Sparse vectors (dense vector) in Lucene, like other types, are distributed across multiple segments. As a result, each time segments are merged, the HNSW graph needs to be recalculated. Every query searching involves running HNSW on multiple segments and then merging the results, introducing extra overhead.[^13]
+Dense vectors in Lucene, like other types, are distributed across multiple segments. As a result, each time segments are merged, the HNSW graph needs to be recalculated. Every query searching involves running HNSW on multiple segments and then merging the results, introducing extra overhead.[^13]
 
-Sparse vectors (tensor) in Vespa are treated as first-class citizens, with the HNSW graph generated in memory, storing vectors for all documents.[^11] In terms of performance, Vespa is clearly faster than ES.[^12] However, since ES stores vectors on disk, while Vespa stores them entirely in memory, Vespa does not support queries on vector spaces larger than available memory.
+Tensors in Vespa are treated as first-class citizens, with the HNSW graph generated in memory, storing vectors for all documents.[^11] In terms of performance, Vespa is clearly faster than ES.[^12] However, since ES stores vectors on disk, while Vespa stores them entirely in memory, Vespa does not support queries on vector spaces larger than available memory.
 
 ## Multi-Threaded Queries
 
