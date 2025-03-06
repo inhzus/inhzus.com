@@ -22,7 +22,7 @@ Homebrew 被人熟知的使用场景是在 macOS 上，但其实在 Linux 的完
 
 默认情况下，即 [brew.sh](https://brew.sh/) 中提供的方式，将安装至 `/home/linuxbrew/.linuxbrew`，如果你有 `/home` 权限，那这是最佳的安装方式。
 
-```shell
+```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
@@ -34,7 +34,7 @@ Homebrew 被人熟知的使用场景是在 macOS 上，但其实在 Linux 的完
 
 如果没有 `/home` 路径的权限，可以[自定义安装位置](https://docs.brew.sh/Installation#untar-anywhere-unsupported)（`HOMEBREW_PREFIX`）：
 
-```shell
+```bash
 mkdir homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip-components 1 -C homebrew
 ```
 
@@ -46,7 +46,7 @@ mkdir homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar 
 
 通过以下命令之一判断环境是否支持 user namespace：
 
-```shell
+```bash
 $ unshare --user --pid echo YES
 YES
 $ zgrep CONFIG_USER_NS /proc/config.gz
@@ -57,14 +57,14 @@ CONFIG_USER_NS=y
 
 如果支持，推荐使用 [nix-user-chroot](https://github.com/nix-community/nix-user-chroot) 安装 Nix：
 
-```shell
+```bash
 mkdir -m 0755 ~/.nix
 nix-user-chroot ~/.nix bash -c 'curl -L https://nixos.org/nix/install | sh'
 ```
 
 安装后，使用如下的指令，即可进入该 namespace 使用 nix，注意，如果要使用安装的包，也必须使用 `nix-user-chroot` 进入该 namespace 后才能使用。
 
-```shell
+```bash
 nix-user-chroot ~/.nix bash
 nix-env -i openssl
 ```
@@ -73,13 +73,13 @@ nix-env -i openssl
 
 Homebrew 和 Nix 都是包管理器，扩展到开发环境管理工具，推荐使用 [Mise](https://mise.jdx.dev/)，使用如下指令安装 mise 至 `~/.local/bin/mise`。
 
-```shell
+```bash
 curl https://mise.run | sh
 ```
 
 Mise 可以安装常用的开发工具或运行时，如 node，python 等，且能在不同的作用域（如全局或某文件夹下）指定不同的版本。该工具保持了对 [asdf](https://asdf-vm.com/) 的兼容。
 
-```shell
+```bash
 mise use --global python@latest
 # 使用如上指令即可安装、全局使用 Python 最新版本
 ```
@@ -94,7 +94,7 @@ mise use --global python@latest
 
 注意：与大多数教程不同 我想介绍的是，mise 支持以这些包管理器为后端，将这些工具全部纳入 mise 的管理中。
 
-```shell
+```bash
 # Install rustup
 $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # ripgrep
@@ -127,7 +127,7 @@ $ mise use -g go:github.com/junegunn/fzf
 
 以下特别记录下 `llvm-project` 中组件 `clangd` 和 `clang-format` 的构建，作为 C++ 开发的起手式，鉴于其[构建文档](https://llvm.org/docs/GettingStarted.html#getting-a-modern-host-c-toolchain)并不是很好找。
 
-```shell
+```bash
 # Build gcc
 gcc_version=7.4.0
 wget https://ftp.gnu.org/gnu/gcc/gcc-${gcc_version}/gcc-${gcc_version}.tar.bz2

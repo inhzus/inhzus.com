@@ -1,7 +1,8 @@
 ---
 title: "Vespa 索引检索实现"
 date: 2024-12-03T17:42:00+08:00
-toc: true
+extra:
+  toc: true
 ---
 
 上一文，[Vespa 索引结构实现](/posts/2024-12-04-vespa-index-impl/)，讲述了 Vespa 构建各种索引、倒排索引使用的数据结构，本文将介绍检索是如何基于这些数据结构进行的。

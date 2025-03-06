@@ -1,6 +1,5 @@
 ---
 title: "About"
-date: 2019-09-27T00:17:25+08:00
 ---
 
 ## inhzus 的由来
@@ -9,15 +8,13 @@ date: 2019-09-27T00:17:25+08:00
 
 ## 关于我
 
-2000 年出生，本科毕业于南大计科，目前在北京生活。可见我的[简历](https://inhzus.io/posts/resume/)。
+2000 年出生，本科毕业于南大计科，目前在杭州生活。可见我的[简历](https://inhzus.io/posts/resume/)。
 
 ## 联系我
 
 - [GitHub](https://github.com/inhzus)
 
 - [Twitter](https://twitter.com/intzus)
-
-- [stats.fm](https://stats.fm/inhzus)
 
 <br/>
 

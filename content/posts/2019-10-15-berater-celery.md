@@ -80,7 +80,7 @@ Flask 可以将该文件作为模块 import，[celery.task reference](http://doc
 
 目前 celery==4.3.0, kombu==4.6.5 版本会遇到 [InconsistencyError](https://github.com/celery/kombu/issues/236)，将 kombu 降级至 4.5.0 后解决。在 supervisord 配置文件中配置执行 command:
 
-```shell
+```bash
 celery -A berater.misc.tasks.cron worker -B -E
 ```
 
@@ -93,7 +93,7 @@ monitor 决定使用 celery-flower，进行配置后可以有 dashboard 进行�
 
 - 对于 nginx 反向代理，Flower 支持设置 [url prefix](https://flower.readthedocs.io/en/latest/config.html#url-prefix)。command 如下：
 
-```shell
+```bash
 celery -A berater.misc.tasks.cron flower --basic_auth=$CELERY_AUTH --url_prefix=flower
 ```
 

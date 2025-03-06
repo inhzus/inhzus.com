@@ -1,9 +1,10 @@
 ---
 title: "Vespa 索引结构实现"
 date: 2024-12-02T16:30:00+08:00
-mathjax: true
-toc: true
-aliases: ["2024-11-15-vespa-index-impl"]
+aliases: ["/posts/2024-11-15-vespa-index-impl/"]
+extra:
+  toc: true
+  mathjax: true
 ---
 
 [上一文](/posts/2024-10-12-vespa-vs-elasticsearch/)大概讲述了 Vespa 与 ElasticSearch 的区别，本文具体展开讲述 Vespa 的索引实现，主要聚焦于数据结构。下篇[Vespa 索引检索实现](/posts/2024-12-05-vespa-match-impl/)中会详细讲述如何使用这些数据结构进行检索。

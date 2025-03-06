@@ -1,7 +1,8 @@
 ---
 title: "Vespa 详解及对比 Elasticsearch"
 date: 2024-10-15T22:33:53+08:00
-toc: true
+extra:
+  toc: true
 ---
 
 在这家公司做了两年 Vespa 相关开发后，当被问到 Vespa 相比 Elasticsearch 的优势时，我居然很茫然。于是又重新好好地梳理了下 Vespa 的逻辑，参照之前了解的 ES（Elasticsearch）的一些概念，记录下这篇文章来总结这两者的区别。同时推荐读我的另外两篇更深入讲解 Vespa 原理的博客：[Vespa 索引结构实现](/posts/2024-12-04-vespa-index-impl/)，[Vespa 索引检索实现](/posts/2024-12-05-vespa-match-impl/)。
