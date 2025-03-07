@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://zola.inhzus.io"
+base_url = "https://inhzus.io"
 title = "Inhzus"
 author = "inhzus"
 theme = "futu"
