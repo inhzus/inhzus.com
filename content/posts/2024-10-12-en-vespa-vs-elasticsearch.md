@@ -1,8 +1,8 @@
 ---
 title: "Implementation of Vespa & Vespa vs Elasticsearch"
 date: 2024-10-15T22:33:53+08:00
-toc: true
-vice: true
+extra:
+  toc: true
 ---
 
 After two years of Vespa-related development at this company, I was surprisingly at a loss when asked about the advantages of Vespa over Elasticsearch. Therefore, I took the time to scan Vespa’s code again, comparing it with some concepts I had learned from Elasticsearch (ES), and documented this article to summarize the differences between the two.

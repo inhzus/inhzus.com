@@ -2,8 +2,9 @@
 title: 八叉树颜色量化
 date: 2019-03-20 19:58:40
 tags: [Image, Algorithm, C++]
-mathjax: true
 description: 使用 C++ 实现八方图颜色量化的各种算法
+extra:
+  mathjax: true
 ---
 
 ### 实验目的

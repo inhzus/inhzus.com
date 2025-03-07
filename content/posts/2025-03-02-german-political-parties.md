@@ -2,7 +2,7 @@
 title: "2025 年德国大选主要政党介绍"
 date: 2025-03-02T11:30:00+08:00
 tags: [politics]
-aliases: [2025-02-27-german-political-parties]
+aliases: [/posts/2025-02-27-german-political-parties/]
 ---
 
 以下博客内容均是对「独树不成林」这档播客节目最近几期于德国大选时相关节目的摘录和小结，仅用于我之后更方便的回顾。内容摘录自以下几期，及在中文维基百科上可以获取到的信息。

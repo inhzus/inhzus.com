@@ -2,8 +2,9 @@
 title: 直方图均衡化的实现
 date: 2019-03-14 01:59:03
 tags: [Image, Matlab, Algorithm]
-mathjax: true
 description: 使用 MatLab 实现直方图均衡化
+extra:
+  mathjax: true
 ---
 
 ### 要求
