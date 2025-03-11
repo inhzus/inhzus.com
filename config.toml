@@ -39,6 +39,10 @@ name = "Posts"
 url = "@/posts/_index.md"
 
 [[extra.nav]]
+name = "Channel"
+url = "@/channel/_index.md"
+
+[[extra.nav]]
 name = "About"
 url = "@/about/_index.md"
 
@@ -51,3 +55,8 @@ repo = "inhzus/inhzus.com"
 repoId = "MDEwOlJlcG9zaXRvcnkyMTExMzU3MzI="
 category = "General"
 categoryId = "DIC_kwDODJWs9M4CcxYg"
+
+[extra.mastodon]
+instanceUrl = "https://mastodon.social"
+userId = "114138558280160344"
+profileName = "@inhzus"
