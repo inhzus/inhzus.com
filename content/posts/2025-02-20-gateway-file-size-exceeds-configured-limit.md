@@ -4,6 +4,7 @@ date: 2025-02-20T18:19:00+08:00
 tags: [jetbrains]
 ---
 
+## File Size Exceeds Configured Limit
 When there's a really large code file in the project and JetBrains' IDE may complains at the top of editor:
 
 >File size exceeds configured limit (2560000). Code insight features not available.
@@ -46,3 +47,17 @@ idea.max.content.load.filesize=60000
 
 5. Restart IDE.
 
+## Network is Unreachable
+
+Similarly when your dev container is in IPv6-only environment, IDEA will report "Network is unreachable". Following steps are required to fix the issue.
+
+1. Find `idea64.vmoptions` in the cache folder. Typically at `~/.cache/JetBrains/RemoteDev/dist/xxx_ideaIU-xxx/bin/idea64.vmoptions`.
+
+2. Add these arguments:
+
+```properties
+-Djava.net.preferIPv4Stack=false
+-Djava.net.preferIPv6Addresses=true
+```
+
+3. Save and restart IDE.
