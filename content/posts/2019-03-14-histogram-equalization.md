@@ -18,7 +18,7 @@ extra:
 要实现直方图均衡化, 最关键的问题在于找到均衡化的单调变换函数.
 
 这一函数的推导课上已经给出:
-![formula](https://i.loli.net/2019/06/02/5cf3e5f94362023122.jpg)
+![](https://image.inhzus.io/2025/05/40a6097a58e9de2134337db27f7e0a56.jpeg)
 
 ### 彩色图的两种实现思路
 
@@ -52,25 +52,25 @@ HSV 这种色彩表示方式在课上也有提到.按照 [维基百科](<https:/
 
 下图可以看出, 原图的色域较小, 而经过均衡化, 黑白对比非常明显.
 
-![hawkes](https://i.loli.net/2019/06/02/5cf3e5fb74ec564237.jpg)
+![](https://image.inhzus.io/2025/05/fa76040865c81918aceead8731eef403.jpeg)
 
 #### RGB
 
 通过以下图可以看出, 颜色分布较原图更加广泛平均.
 
-![color](https://i.loli.net/2019/06/02/5cf3e608706a871392.jpg)
+![](https://image.inhzus.io/2025/05/c89424fa922d212c4b97e1183f108a61.jpeg)
 
 #### HSV
 
 下图与上图相比较, 能够看出, 颜色本就已经鲜艳的地方饱和度变得更高, 同时照片的亮度对比度(上下对比)也变大.
 
-![hsv](https://i.loli.net/2019/06/02/5cf3e60e1737e34618.jpg)
+![](https://image.inhzus.io/2025/05/b7a7d6cf744dae5234da1683cd5e99d4.jpeg)
 
 #### 观察: 直方图均衡化放大了噪声
 
 以下图片是我使用手机拍摄得到, 整体色调偏暗, 黑色较多, 经过 RGB 直方图均衡化后可以观察到图片中的电脑上有大量噪点.
 
-![noise](https://i.loli.net/2019/06/02/5cf3e61481d4a58580.jpg)
+![](https://image.inhzus.io/2025/05/59863de3a3a835d5f3be829d485372f0.jpeg)
 
 ### 具体实现
 

@@ -360,7 +360,7 @@ $n = 30000, p = 8$
 | 串行枚举排序 | 114,081,546 ns |
 | 并行枚举排序 | 30,905,422 ns  |
 
-![image-20191230174545611.png](https://i.loli.net/2020/02/14/TbplVdFuW12sc79.png)
+![](https://image.inhzus.io/2025/05/7c20058626e78b50f8463611c3ecb61e.png)
 
 $n=30000 \cdot 10, p=8$
 
@@ -374,7 +374,7 @@ $n=30000 \cdot 10, p=8$
 | 串行归并排序 | 22,986,012 ns |
 | 并行归并排序 | 7,071,798 ns  |
 
-![image-20191230174930744.png](https://i.loli.net/2020/02/14/36j5dAKDimksqwB.png)
+![](https://image.inhzus.io/2025/05/a4cd506110400ad978a8f6e3c7417b9f.png)
 
 ### 分析
 

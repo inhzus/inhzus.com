@@ -76,13 +76,13 @@ Apriori 算法基于先验规则: k 长度的频繁项集的所有 k-1 长度的
 
 在最小支持度为 0.05, 最小置信度为 0.2 情况下
 
-![](https://i.loli.net/2019/06/02/5cf3e67b3e48c40715.jpg)
+![](https://image.inhzus.io/2025/05/d89c4f8182a3a19c3cb924c46f370af9.jpeg)
 
 #### Unix storage
 
 在最小支持度 0.15, 最小置信度 0.8 情况下
 
-![](https://i.loli.net/2019/06/02/5cf3e6806d09e64264.jpg)
+![](https://image.inhzus.io/2025/05/3d69602dc3744323ab7a051e96ecbe1d.jpeg)
 
 #### 分析
 
@@ -92,11 +92,11 @@ Apriori 算法基于先验规则: k 长度的频繁项集的所有 k-1 长度的
 
 使用 Apriori, 时间开销 271 ms:
 
-![](https://i.loli.net/2019/06/02/5cf3e68b24ebc45171.jpg)
+![](https://image.inhzus.io/2025/05/9975a82d70caaa6d1032e54fbaa7ba49.jpeg)
 
 使用 FP-Growth, 时间开销 409 ms:
 
-![](https://i.loli.net/2019/06/02/5cf3e68df3e2b75350.jpg)
+![](https://image.inhzus.io/2025/05/2e1ff81ef3cdc74cb95196805c920ec1.jpeg)
 
 
 使用 dummy 方法, 时间开销令人震惊的只有 286 ms. 我的 dummy 算法改自 Apriori 算法, 即将其中剪枝的过程去除. 由于这一算法继承了 Apriori 中 bitarray 的优秀设计, 所以时间复杂度也很好.

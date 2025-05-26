@@ -14,7 +14,7 @@ Follow the steps below to solve the issue.
 1. Edit custom properties on the remote machine (instead of your local client):
    Help -> Edit Custom Properties... (On Host)
 
-<img src="https://s2.loli.net/2025/02/20/PEWGqdoSt97nTxB.png" alt="Edit Custom Properties (On Host)" style="zoom: 33%;" />
+<img src="https://image.inhzus.io/2025/05/75b0b40a7ef6b5ac1746579375d1576a.png" alt="Edit Custom Properties (On Host)" style="zoom: 33%;" />
 
 2. Add the following lines to the properties:
 

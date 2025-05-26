@@ -13,7 +13,7 @@ extra:
 
 众所周知，客户端发起的一次请求，在 QRS 上会分为两阶段进行，大部分任务在第一阶段完成：匹配、记分、排序等等，最终会返回给 QRS 这一轻量级的服务以 doc ids 及其它信息，QRS 上会对多个分片上的 doc ids 排序归并，到第二阶段时，向 content 节点请求这些 doc ids 的正排信息，以减少不必要的 IO。
 
-<img src="https://s2.loli.net/2024/11/20/rmDLPxNGTFlcJ7f.jpg" alt="match-two-phase.jpg" style="zoom:25%;" />
+<img src="https://image.inhzus.io/2025/05/430ad0c70157e7125c6fdca71e816191.png" alt="match-two-phase.jpg" style="zoom:25%;" />
 
 我们重点关注第一阶段中的匹配过程。
 
@@ -25,7 +25,7 @@ extra:
 
 
 
-<img src="https://s2.loli.net/2024/11/20/y6AoQHiCOpfnDJR.jpg" alt="match-macro-view.jpg" style="zoom:25%;" />
+<img src="https://image.inhzus.io/2025/05/4c288d82ebd3e0b48983c64db53d22a0.png" alt="match-macro-view.jpg" style="zoom:25%;" />
 
 更详细地来说，Blueprint 树会构建若干个 SearchIterator 树用于每个 match thread 使用，匹配时会将本机的 local doc id 空间，按 thread 数量分为若干段，每根 SearchIterator 树在在这段 local doc id 空间上从低位至高位匹配，同时 unpack 出相关性分数计算需要的数据，ranking 部分会据此同时计算出每个文档的分数。
 
@@ -92,7 +92,7 @@ select * from sources * where name contains "foo"
 
 对于没有倒排的单值或多值字段，当 SearchIterator seek 至某 docId 时，从 EnumStore 取出其值进行暴力的匹配。
 
-<img src="https://s2.loli.net/2024/11/22/3n1XjNckM5Je9ZA.jpg" alt="match-attribute" style="zoom: 25%;" />
+<img src="https://image.inhzus.io/2025/05/ca35d93615d67b2784b942deb3b0d95f.png" alt="match-attribute" style="zoom: 25%;" />
 
 ```C++
 // single value
@@ -120,7 +120,7 @@ int32_t find(DocId doc, int32_t elemId) const {
 
 当有倒排时，在构建 Blueprint 时，即会通过 dictionary 检索至倒排表，SearchIterator 在倒排表上线性地推进。
 
-<img src="https://s2.loli.net/2024/11/22/ZOgWnCNVKemlDuS.jpg" alt="match-fastsearch-attribute.jpg" style="zoom: 33%;" />
+<img src="https://image.inhzus.io/2025/05/0fa1064fcbf75387a340447fbc1bf855.png" alt="match-fastsearch-attribute.jpg" style="zoom: 33%;" />
 
 ```C++
 void AttributePostingListIteratorT::doSeek(uint32_t docId) {
@@ -143,7 +143,7 @@ void AttributePostingListIteratorT::doSeek(uint32_t docId) {
 
 于是，一个简单的 term query，构建的 Blueprint 会变成：
 
-<img src="https://s2.loli.net/2024/11/22/lhrME3kNKTcjCG5.jpg" alt="match-index-blueprint.jpg" style="zoom: 33%;" />
+<img src="https://image.inhzus.io/2025/05/04ad764a82d135f235d798bb76bc1027.png" alt="match-index-blueprint.jpg" style="zoom: 33%;" />
 
 下边具体展开每项阐述。
 
@@ -151,25 +151,25 @@ void AttributePostingListIteratorT::doSeek(uint32_t docId) {
 
 这里与 attribute x fast-search 几乎一致，如下图。
 
-<img src="https://s2.loli.net/2024/11/22/iADj75tOSCZUnHg.jpg" alt="match-memory-index.jpg" style="zoom:33%;" />
+<img src="https://image.inhzus.io/2025/05/4da273fe9a47905b3c5bbac8ed86ac5d.png" alt="match-memory-index.jpg" style="zoom:33%;" />
 
 #### Disk Index
 
 Disk index 的结构是多层跳表，查询即是在每层上定位区间，通过 offset 定位至下一层的区间内继续匹配。
 
-<img src="https://s2.loli.net/2024/11/22/3TRuaQFImUEMxKO.jpg" alt="match-disk-index.jpg" style="zoom:33%;" />
+<img src="https://image.inhzus.io/2025/05/f0ec3c5f0cb02e7798f7beb8682b3b57.png" alt="match-disk-index.jpg" style="zoom:33%;" />
 
 #### WhiteListBlueprint
 
 DocumentMetaStore 中以 BitVector 的形式存储正在使用的 local id（即下图中的 lid）空间，WhiteListBlueprint 会由此构建 `BitVectorIterator` ，筛选掉不存在的 doc id。
 
-<img src="https://s2.loli.net/2024/11/22/ILQdxgNeO8cD6Vz.jpg" alt="whitelist-blueprint.jpg" style="zoom: 33%;" />
+<img src="https://image.inhzus.io/2025/05/8516334d6ea07ad291739a88cf7f737d.png" alt="whitelist-blueprint.jpg" style="zoom: 33%;" />
 
 #### SourceBlenderBlueprint
 
 管理 index 时会存储如下图所示的 `SourceSelector`，其复用了 attribute 的数据结构。于是在 seek 每个 doc id 时，可以找到对应的 index。
 
-<img src="https://s2.loli.net/2024/11/22/zyBKHO1e2fsn4FU.jpg" alt="source-blender.jpg" style="zoom:33%;" />
+<img src="https://image.inhzus.io/2025/05/93ebf7c8f35283dd8d6aab8d9643b12e.png" alt="source-blender.jpg" style="zoom:33%;" />
 
 ```C++
 void SourceBlenderSearch::doSeek(uint32_t docId) {
@@ -222,7 +222,7 @@ void AndNotSearch::doSeek(uint32_t docId) {
 
 对于 prefix / range / fuzzy / regex 搜索来说，并不是每个 Blueprint 对应一个倒排表，Vespa 将这些逻辑全部封装在 `PostingListSearchContext` 中。在构建 `SearchContext` 检索到多个倒排表时，会将这些倒排表合并，合并的结果是数组或 bitvector。
 
-<img src="https://s2.loli.net/2024/11/25/9qZlKTFrfROyW7x.jpg" alt="multi-posting-lists.jpg" style="zoom:33%;" />
+<img src="https://image.inhzus.io/2025/05/05fd66231d74248a55eef18c9e1be446.png" alt="multi-posting-lists.jpg" style="zoom:33%;" />
 
 ## 交并优化
 
@@ -238,11 +238,11 @@ void AndNotSearch::doSeek(uint32_t docId) {
 
 如前边所说，简单的中间节点 seek 的方式，就是遍历所有的子 iterator 逐个推进。Vespa 中广泛使用的一种优化是将它们按 docId 排序（数据结构往往是最小堆），在推进 docId 时可以减少调用子 iterator 的次数。
 
-<img src="https://s2.loli.net/2024/11/25/j5A4f1mn6VhUeMQ.jpg" alt="weightedset-term-search.jpg" style="zoom: 33%;" />
+<img src="https://image.inhzus.io/2025/05/caa7b30443c5cde3e7985bb68e6967f1.png" alt="weightedset-term-search.jpg" style="zoom: 33%;" />
 
 ### MultiBitVectorIterator
 
 在构建完整的 SearchIterator 树后，最后一步的优化是寻找子节点均是 bitvector 实现的中间节点，于是可以批量地将这些 bitvector and/or，还可以利用 SIMD 加速这一过程。
 
-<img src="https://s2.loli.net/2024/11/25/rGf69MsKhj1Uycb.jpg" alt="multibitvector.jpg" style="zoom:33%;" />
+<img src="https://image.inhzus.io/2025/05/e1ed671960df585b388e0738af1e4e71.png" alt="multibitvector.jpg" style="zoom:33%;" />
 

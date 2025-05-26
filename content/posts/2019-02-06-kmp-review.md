@@ -102,7 +102,7 @@ void GetNext(char *p, int next[]) {
 
 由此可优化, 当相等时, 可令 `next[j] = next[next[j]]`, 减少了在 KMP 搜索时的递归.
 
-![](https://i.loli.net/2019/06/02/5cf3e66f132e015470.jpg)
+![](https://image.inhzus.io/2025/05/fb36e156cc20cae214d25102eb233429.jpeg)
 
 ```c++
 void GetNextval(char *p, int next[]) {
