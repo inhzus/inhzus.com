@@ -11,7 +11,7 @@ tags: [Device]
 本人键盘使用经历：poker 2 60 键，Leopold 750R 87 键；目前家里两把大 F 忍者 87 键，anne pro 2 60 键受害者。
 
 上图（枕腕为附赠）：
-![img2](https://imgur.com/VxaTngA.png)
+![img2](https://image.inhzus.io/2025/05/7bf3f4f509e0ea3db30bf2a35a3b6b56.png)
 
 ### 键位
 
