@@ -43,7 +43,7 @@ PostingStore 是对 DataStore 这一 Vespa 通用容器的封装，向 DataStore
 
 #### 数据结构
 
-<img src="https://s2.loli.net/2024/11/20/UA8N1B6QrJoRCGz.jpg" alt="posting-list.drawio.jpg" style="zoom:20%;" />
+<img src="https://image.inhzus.io/2025/05/01268383cb0ccacc466b6189a183bd03.jpg" alt="posting-list.drawio.jpg" style="zoom:20%;" />
 
 通过 DataStore 提供的接口，PostingStore 持有了这一列所有倒排表，每个倒排表根据大小和配置的不同，使用不同的数据结构存储：
 
