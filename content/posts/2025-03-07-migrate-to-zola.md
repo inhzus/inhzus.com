@@ -22,12 +22,13 @@ date = "2025-03-08T10:50:00+08:00"
 
 于是可以做到：
 
+{% raw %}
 ```html
 <!-- base.html -->
 {% block init %}
   {% set title = config.title %}
   {% set author = config.author %}
-{% end block %}
+{% endblock %}
 
 <title>{{ title }}</title>
 <meta author="{{ author }}"/>
@@ -38,6 +39,7 @@ date = "2025-03-08T10:50:00+08:00"
   {% set title = page.title ~ " | " ~ config.title %}
 {% endblock %}
 ```
+{% endraw %}
 
 在 `base.html` 中声明需要使用到的变量；在对应到不同的实现中（如 index/post/archive），调用 `super()` 接受大多数默认变量，修改当前页面需自定义的部分。
 
