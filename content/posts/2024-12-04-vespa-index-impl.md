@@ -11,19 +11,19 @@ extra:
 
 ## 倒排索引的底层数据结构
 
-一般来说，倒排索引都包含两部分：词典（dictionary）和倒排表（posting list）。
+一般来说，倒排索引都包含两部分：词典（dictionary）和倒排表（posting list）。在 Vespa 中，存在多套符合这一抽象的实现，以下以 fast-search attribute 为例进行解释，memory index 和 disk index 的实现类似。
 
 其中词典以 term 为 key，value 为指向其对应倒排表的 id，在 Vespa 中称为 EnumStoreDictionary。
 
-倒排表中也存储了一系列 key-value，其中 key 为 docId，value 为空、或权重或特征（如 bm25 需要的词频等信息），在 Vespa 中倒排表由 PostingStore 管理。
+倒排表中也存储了一系列 key-value，其中 key 为 docId，value 为空、或权重或特征（如 bm25 需要的词频等信息）。在 Vespa 中倒排表由 PostingStore 管理。
 
 举个例子，假设引擎中现在存储多篇文档，如下。
 
 ```json
 [
-  {"0": "foo bar"},
-  {"1": "bar zoo"},
-  {"2": "foo zoo"}
+  {"1": "foo zoo"},
+  {"2": "foo bar"},
+  {"3": "bar zoo"}
 ]
 ```
 
@@ -64,27 +64,27 @@ $$
 
 当倒排表长度小于 8 时，B-Tree 会被替代为简单的数组，可以在几乎不影响查询性能的情况下，减少写入的开销。
 
-当长度大于 `max(128, 文档数 >> 6)` 时，会在 B-Tree 外构建 BitVector：
+当长度大于 `max(128, 文档数 >> 6)` 时，选择在 B-Tree 外构建 BitVector：
 
 - 优点：极大地加速了匹配速度；
 - 缺点：只能确定是否包含某个文档，无额外空间容纳每个文档额外的数据，如权重等这些在相关性分数计算时需要的数据；
 - 由于以上的缺点，只有在 query 不参与相关性分数计算、只用做过滤时，才能使用 BitVector 进行高效率地匹配；
-- 当然如果在配置中声明该字段就只参与过滤，便不会构建 B-Tree，提高写入性能。
+- 当然如果在配置中声明该字段就只参与过滤，也会选择不构建 B-Tree，提高写入性能。
 
 #### Value
 
 以上是基础倒排表存储结构。在以上描述中，忽略了 B-Tree 中 value 位置的数据。
 
-- Value 位置的数据最大为 32 位；
+- Value 位置的数据通常为 32 位；
 - 在最容易理解的场景，value 代表的含义可以是这个 term 在这个文档内的重复次数，或是 weightedSet 这一类型数据中的权重，这两种场景均可以用 uint32_t 或 int32_t 表示；
 - 可以为空；
-- 当代表的内容数据大于 32 位时，此处只存储一个 id，通过此 id 可以去另一个数据结构中获取到原始的数据内容。这种场景通常是经过分词、normalization、stemming 后的文本，需要存储每个 term 的 position、occurence 等，后续可能参与如 bm25 分数计算，可参考 FeatureStore 代码了解更多，不具体展开。
+- 在 index 索引场景下，此处只存储一个 id，通过此 id 可以去另一个数据结构中获取到原始的数据内容。这种场景通常是经过分词、normalization、stemming 后的文本，需要存储每个 term 的 position、occurence 等，后续可能参与如 bm25 分数计算，可参考 FeatureStore 代码了解更多，不具体展开。
 
 ### Dictionary
 
 这一部分代码逻辑基本体现在 EnumStoreDictionary。
 
-Dictionary 存储了从 term 到倒排表 id 的映射。其支持 BTree 或 hash 两种索引结构，也可以同时存在，具体选择哪种，需在配置中显示定义。
+Dictionary 存储了从 term 到倒排表 id 的映射。注意，其 key 的位置是 EntryRef 而不是复制的完整的值。其支持 BTree 或 hash 两种索引结构，也可以同时存在，具体选择哪种，需在配置中显示定义。
 
 默认情况下使用 BTree 结构，BTree 在支持前缀匹配、范围查询的情况下，提供了较合理的查询性能。
 
@@ -125,7 +125,7 @@ EnumStore 在使用了 DataStore 的基础上，可以使用 EnumStoreDictionary
 
 ### MultiValueMapping
 
-EnumStore 只能支持单值字段的存储与检索，为了支持多值字段，如 `array<int>`、`array<string>`、`weightedset<string>`，MultiValueMapping 基于 RCUVector 和 ArrayStore 构建了 local docId 到多值字段值的映射。
+EnumStore 直接用于单值的存储与检索，为了支持多值字段，如 `array<int>`、`array<string>`、`weightedset<string>`，MultiValueMapping 基于 RCUVector 和 ArrayStore 构建了 local docId 到多值字段值的映射。
 
 <img src="https://image.inhzus.io/2025/05/b1876f511943dc9c5d2ba662b7812029.png" alt="multi-value-mapping.drawio.jpg" style="zoom:22%;" />
 
@@ -139,8 +139,8 @@ EnumStore 只能支持单值字段的存储与检索，为了支持多值字段�
 
 最基本的情况下，attribute 选项要做到的是把这一列数据全量地放在内存中，便于：
 
-1. 在 fetch 阶段更快地获取每个 doc 这一 field 的值；
-2. 只有开启了 attribute 选项的字段才能使用 grouping，ranking，sorting 等功能；
+1. 在 ranking / summary 阶段更快地获取每个 doc 这一 field 的值；
+2. 只有开启了 attribute 选项的字段才能使用 grouping，sorting 等功能；
 3. 在此基础可以选择构建倒排，用于结构化数据的匹配。
 
 我们由简到繁介绍不同情况下 attribute 的实现，主要的变量是两个：
@@ -151,11 +151,11 @@ EnumStore 只能支持单值字段的存储与检索，为了支持多值字段�
 
 <img src="https://image.inhzus.io/2025/05/fd2866b6f616cd276c04725c523790a3.png" alt="attribute-data-structures.drawio.jpg" style="zoom:25%;" />
 
-以上这张表中列出了不同类型会使用到的数据结构，具体实现请往下看。
+以上这张表中列出了不同类型会使用到的数据结构（不包括 tensor、predicate 等类型），具体实现请往下看。
 
 ### SingleValue-Numeric
 
-首先说明，在向 Vespa 写入文档时，需要指定文档 id，这个 id 通常被称作 global id。实际上的内存存储中，global id 会转换为 local id。global id 可以是满足 pattern 的任意字符串，而 local id 则是从 0 开始递增的，这样，以 local id 为数组序号，可以在一个数组中密集地放下一个字段所有文档的值。随着较小 local id 文档的删除，local id 空间的空槽比例会增加，vespa 会在后台自动地压缩 id 空间。稍后我们会详细讲述这个数据是如何存储的。
+首先说明，在向 Vespa 写入文档时，需要指定 DocumentId，随后 vespa 会由该值派生 96-bit global id，之后在内存存储中，global id 会映射为紧凑的 local id。global id 可以是满足 pattern 的任意字符串，而 local id 则是从 1 开始递增的，lid 0 为保留值。这样，以 local id 为数组序号，可以在一个数组中密集地放下一个字段所有文档的值。随着较小 local id 文档的删除，local id 空间的空槽比例会增加，vespa 会在后台自动地压缩 id 空间。稍后我们会详细讲述这个数据是如何存储的。
 
 单值、数字（也就是定长）、不构建倒排，只需要简单的 RCU Vector 即可。
 
@@ -213,7 +213,9 @@ Memory index 的数据结构非常类似于 attribute 中的 MultiValue-String-F
 
 1. 不需要另外存储全量数据，于是没有 DocumentVector 和 MultiValueMapping；
 2. 经过 tokenizing 的文本，会带有如词频、位置等信息，用于之后的 bm25、nativeRank 计算，故会有额外的 FeatureStore 数据结构存储这些特征信息，在 PostingStore 中成对存储了 docId 和指向 FeatureStore 的 EntryRef。
-3. Attribute 可以配置 dictionary 使用 hash 或者 BTree，memory index 则只有 BTree 这个选项（很容易理解的：index 索引的文本通常并不具有高唯一性）。
+3. Attribute 可以配置 dictionary 使用 hash 或者 BTree，memory index 则只有 BTree 这个选项。
+
+注意，下图中使用了类似于 attribute 的类名方便理解，实际实现中并非。
 
 <img src="https://image.inhzus.io/2025/05/b71c45990c3ae89db2ff748b81a95a48.png" alt="memory-index.drawio.jpg" style="zoom:25%;" />
 
