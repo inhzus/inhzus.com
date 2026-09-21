@@ -58,6 +58,10 @@ If the newest hold has no readers, the handler can reuse it with the next genera
 
 For example, suppose a reader holds generation 10 and a writer replaces an array associated with that generation. The writer can publish the replacement and proceed to generation 11, but the old array must remain on hold. Once the reader leaves and the reclamation boundary advances past 10, the store can reuse that memory.
 
+[![Timeline showing a reader holding generation 10 while the writer publishes array B and retires array A. A becomes reclaimable only after the guard is released and the oldest-used generation advances past 10.](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/generation-lifetime.svg)](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/generation-lifetime.svg)
+
+*A generation guard protects storage lifetime; it does not select a fixed version of every value.*
+
 A slow reader can consequently keep a considerable amount of replaced data alive. This is why on-hold memory matters when examining memory usage during heavy updates.
 
 ## DataStore and B-trees
@@ -71,6 +75,10 @@ Compaction follows the same rule. Moving live data to another buffer does not im
 [BTreeNodeAllocator][btree] supports freezing nodes. When the writer later changes a frozen node, it creates a writable copy. Readers can continue traversing the frozen structure they acquired.
 
 After replacement, the old nodes are placed on hold and eventually reclaimed. Thus copying and generation tracking solve different parts of the operation: copying lets the writer change the tree; tracking keeps the old traversal safe.
+
+[![An existing reader retains an old frozen B-tree root and leaf. A newly published root points to a copied, updated leaf; both roots share an unchanged frozen subtree.](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/frozen-btree.svg)](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/frozen-btree.svg)
+
+*Copying permits mutation; generation protection keeps the old traversal alive.*
 
 The memory index makes the sequence particularly clear:
 
@@ -208,6 +216,12 @@ std::shared_ptr<searchcorespi::IndexSearchable> getSearchable() const override {
 After acquiring the pointer, the reader can keep using that collection even if the maintainer installs another one. The lock covers acquisition and replacement, rather than the entire query.
 
 Shared ownership protects the collection's lifetime and membership. It does not make a mutable memory index inside the collection immutable; that index still needs its own reader protection.
+
+The following flush example omits warmup: a disk index replaces a frozen memory index in the new collection, while unchanged sources remain shared.
+
+[![Before a flush replacement, the current collection contains a frozen memory index, an active memory index, and an existing disk index. Afterwards, an old query retains that collection while new queries acquire a collection containing the disk replacement. Both collections share the active memory index and existing disk index.](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/collection-replacement.svg)](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/collection-replacement.svg)
+
+*Replacing the current collection does not invalidate a collection already held by a query.*
 
 ### Locks
 

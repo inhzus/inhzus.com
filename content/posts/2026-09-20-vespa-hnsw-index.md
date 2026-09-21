@@ -47,13 +47,7 @@ For `MULTI`, `HnswNode` additionally stores a document id and a subspace id. Dis
 
 `levels_store` is an `ArrayStore<AtomicEntryRef>`. A node present at levels 0 through 2 has an array of three entries. Each entry points to that node's neighbor array at the corresponding level.
 
-`links_store` is an `ArrayStore<uint32_t>`. Its arrays contain only neighbor nodeids. Following a graph edge therefore involves these lookups:
-
-```text
-nodes[nodeid]
-    -> levels_store: [level 0 ref, level 1 ref, ...]
-    -> links_store:  [neighbor id, neighbor id, ...]
-```
+`links_store` is an `ArrayStore<uint32_t>`. Its arrays contain only neighbor nodeids.
 
 The two stores use different `EntryRef` layouts. The level store reserves 10 bits for the buffer id and 22 for the offset; the link store uses 12 and 20 respectively. This gives them 1024 and 4096 possible buffers.
 
@@ -86,56 +80,19 @@ Assume five documents, each with one two-dimensional vector, and `M = 2`. Level 
 
 In normal insertion, the highest level is drawn by [InvLogLevelGenerator][level-generator]. The probability of level `k` is `(1/M)^k * (1 - 1/M)`. Here we simply choose the levels shown above.
 
-Suppose the graph has these connections:
+Amber highlights the upper-level search for query `(0.8, 0.9)` in this example graph.
 
-```text
-Level 2:  5
-Level 1:  1 <-> 5
+[![Three graph levels: level 2 contains entry node 5; level 1 connects nodes 1 and 5; level 0 has bidirectional links 1–2, 1–3, 1–5, 2–4, 3–4, and 4–5. The highlighted search descends from node 5 at level 2, moves from 5 to 1 at level 1, and descends to node 1 at level 0.](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/graph-levels.svg)](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/graph-levels.svg)
 
-Level 0:
-    1 -> [2, 3, 5]
-    2 -> [1, 4]
-    3 -> [1, 4]
-    4 -> [2, 3, 5]
-    5 -> [1, 4]
-
-Entry point: node 5, level 2
-```
-
-Every edge has a reverse edge, and the link counts are within the limits. These are properties of this example's completed graph; a concurrent reader need not observe both directions being updated at the same instant.
+Every graph edge has a reverse edge, and the link counts are within the limits. These are properties of this example's completed graph; a concurrent reader need not observe both directions being updated at the same instant.
 
 ### In memory
 
-The node vector contains references to five level arrays. The names below are symbolic references, not actual buffer offsets:
+Expanding node 5 shows the two reference lookups:
 
-```text
-nodes[0] -> invalid
-nodes[1] -> levels_1
-nodes[2] -> levels_2
-nodes[3] -> levels_3
-nodes[4] -> levels_4
-nodes[5] -> levels_5
+[![The node vector contains level references, with node 0 invalid. Node 5's EntryRef resolves to a three-entry level array. Its level 0, 1, and 2 references resolve to neighbor arrays [1, 4], [1], and [] respectively. TensorAttribute separately holds the vector (2, 2) for docid 5.](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/graph-storage.svg)](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/graph-storage.svg)
 
-levels_1 = [links_1_0, links_1_1]
-levels_2 = [links_2_0]
-levels_3 = [links_3_0]
-levels_4 = [links_4_0]
-levels_5 = [links_5_0, links_5_1, links_5_2]
-```
-
-Each `links_<node>_<level>` resolves to an array in `links_store`:
-
-```text
-links_1_0 = [2, 3, 5]    links_1_1 = [5]
-links_2_0 = [1, 4]
-links_3_0 = [1, 4]
-links_4_0 = [2, 3, 5]
-links_5_0 = [1, 4]       links_5_1 = [1]    links_5_2 = []
-```
-
-Notice that none of these arrays contains `(0, 0)` or any other vector value. Nor do they contain distances. Those are obtained from the tensor attribute and calculated during the operation.
-
-The 14 neighbor ids occupy 56 bytes of payload. That is only the link data: the node vector, level references, buffer capacity, allocator metadata, and memory awaiting reclamation all add to the total. Counting the links alone would substantially understate the index's memory use.
+The full example graph's 14 neighbor ids occupy 56 bytes of payload. That is only the link data: the node vector, level references, buffer capacity, allocator metadata, and memory awaiting reclamation all add to the total. Counting the links alone would substantially understate the index's memory use.
 
 ### Searching
 
@@ -151,16 +108,11 @@ Let the query vector be `(0.8, 0.9)`, with top-k equal to 2. The squared Euclide
 
 Using squared distances preserves the ordering and avoids taking square roots.
 
-The search starts at node 5, level 2. There are no neighbors at that level, so it descends to level 1. Node 1 is closer to the query than node 5, and becomes the starting point for level 0.
-
 At level 0, [search_layer_helper][search-layer] maintains a nearest-first queue of candidates to explore and a bounded collection of the best results found so far. These serve different purposes: a node can remain in the exploration queue after being displaced from the result set.
 
 For this example, assume the result collection holds two nodes, with no filter, no extra exploration slack, and no deadline reached:
 
-1. Expand node 1. Its neighbors are 2, 3, and 5. Nodes 2 and 3 replace node 1 in the result set; node 5 is too far away.
-2. Expand node 3, the closest queued candidate. Node 1 has already been visited. Node 4 is new, and replaces node 2 in the result set.
-3. The next queued candidate is node 4. Its neighbors add no better result.
-4. Node 2 remains queued, but its distance, 0.85, exceeds the worst retained distance, 0.65. The search stops.
+[![Level-0 search trace, showing nodeid and squared distance. Seed 1 puts 1 at 1.45 in both collections. Expanding 1 gives candidates and results 3 at 0.65 and 2 at 0.85. Expanding 3 gives candidates 4 at 0.05 and 2 at 0.85, but retains results 4 and 3. Expanding 4 leaves 2 queued. The search stops before expanding 2 because 0.85 exceeds the worst retained distance, 0.65; the results remain 4 and 3.](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/search-queues.svg)](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/search-queues.svg)
 
 The returned documents are 4 and 3. They happen to be the exact nearest neighbors in this small graph. In a larger graph, the search width controls how much exploration is done, and HNSW remains an approximate search.
 

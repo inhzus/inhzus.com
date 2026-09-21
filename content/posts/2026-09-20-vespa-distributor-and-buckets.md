@@ -26,6 +26,10 @@ It helps to keep two mappings separate:
 
 Both use the distribution algorithm, but answer different questions. A distributor may own a bucket whose data is stored elsewhere.
 
+Below is an illustrative six-node cluster with two copies per bucket. Rows are layout only for flat distribution; if configured as groups, each row holds a full copy.
+
+[![Six nodes in two rows of three, with highlighted Put arrows from the container through owner D3 to bucket A's copies inside proton on nodes 0 and 1. Other components are muted. Each row contains sample buckets A through F once. In the flat cluster, rows only organize the drawing; in a grouped variant, each row represents one replica group holding a full dataset copy.](https://image.inhzus.io/posts/vespa-distributors-and-buckets/cluster-overview.svg)](https://image.inhzus.io/posts/vespa-distributors-and-buckets/cluster-overview.svg)
+
 ## BucketId
 
 [BucketIdFactory][bucket-factory] constructs a 64-bit value from the document id. From the most significant bit to the least significant bit, its layout is:
@@ -48,11 +52,7 @@ The factory returns a full 58-bit identifier. This does not mean Vespa creates a
 
 Suppose a bucket uses 16 bits and its location is `0x2717`. Splitting by one additional bit gives:
 
-```text
-16 bits:       0x2717
-              /      \
-17 bits:  0x02717    0x12717
-```
+[![A parent bucket with the low 16 bits 0x2717 splits into 17-bit children 0x02717 and 0x12717, distinguished by bit 16. On both replica nodes, the parent is replaced by both children, leaving two copies of each child.](https://image.inhzus.io/posts/vespa-distributors-and-buckets/bucket-split.svg)](https://image.inhzus.io/posts/vespa-distributors-and-buckets/bucket-split.svg)
 
 The two children differ at bit 16, counting from zero. Each document goes to the child matching that bit in its full identifier.
 
@@ -87,7 +87,7 @@ The distributor updates this metadata from storage replies and bucket-info reque
 
 ## Feeding a document
 
-Assume eight content nodes, with corresponding distributors, a flat distribution, 16 distribution bits, and redundancy 2. We will follow a Put for `id:news:article::kitten-finds-home-2024`.
+Assume six content nodes, with corresponding distributors, a flat distribution, 16 distribution bits, and redundancy 2. We will follow a Put for `id:news:article::kitten-finds-home-2024`.
 
 ```text
 Client
@@ -180,6 +180,10 @@ If the storage nodes remain available, losing a distributor does not remove thei
 [StripeBucketDBUpdater][bucket-updater] handles this transition. The old owner drops buckets it no longer owns, while the new owner incorporates reports from storage nodes. Requests may be retried while this is happening.
 
 If storage placement is unchanged, this ownership change does not require moving the documents. Only the responsibility for routing and maintenance has changed.
+
+[![Before, transition, and recovered views for bucket A. A distributor-only failure transfers ownership from D3 to D5 through bucket metadata reports while copies remain on nodes 0 and 1. A storage-node failure leaves a surviving copy on node 1; the new ideal targets are nodes 1 and 2, and document synchronization restores the second copy on node 2.](https://image.inhzus.io/posts/vespa-distributors-and-buckets/failure-recovery.svg)](https://image.inhzus.io/posts/vespa-distributors-and-buckets/failure-recovery.svg)
+
+*Dashed arrows: metadata. Green arrow: document transfer.*
 
 ## Splitting and joining
 
