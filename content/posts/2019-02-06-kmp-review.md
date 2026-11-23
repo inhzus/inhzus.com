@@ -1,6 +1,6 @@
 ---
 title: KMP 算法回顾
-date: 2019-02-06 13:49:22
+date: 2019-02-06T13:49:22+08:00
 tags: [Algorithm]
 description: "回顾 KMP 算法实现的重点"
 extra:

@@ -1,6 +1,6 @@
 ---
 title: Juq Technical Documentation
-date: 2019-03-26 14:17:42
+date: 2019-03-26T14:17:42+08:00
 tags: [Python, Tech, Juq]
 description: Some exellent technical practice in the development of juq library
 ---

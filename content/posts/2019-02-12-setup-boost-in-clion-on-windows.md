@@ -1,6 +1,6 @@
 ---
 title: Windows MinGW 安装 Boost 与 CLion 的配置
-date: 2019-02-12 13:36:06
+date: 2019-02-12T13:36:06+08:00
 tags: [C++, Boost, Windows, Configuration]
 description: "在 Windows 下使用 MinGW gcc 安装 boost，配置 CMake 依赖"
 ---

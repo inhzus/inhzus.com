@@ -1,6 +1,6 @@
 ---
 title: 直方图均衡化的实现
-date: 2019-03-14 01:59:03
+date: 2019-03-14T01:59:03+08:00
 tags: [Image, Matlab, Algorithm]
 description: 使用 MatLab 实现直方图均衡化
 extra:

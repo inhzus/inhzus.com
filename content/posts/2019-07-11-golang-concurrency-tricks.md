@@ -1,6 +1,6 @@
 ---
 title: Golang concurrency tricks
-date: 2019-07-11 21:35:44
+date: 2019-07-11T21:35:44+08:00
 tags: [golang]
 description: 一些 golang 并发编程的技巧
 ---
