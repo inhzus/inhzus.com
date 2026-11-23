@@ -4,7 +4,7 @@ date = "2025-05-26T18:00:00+08:00"
 
 +++
 
-本文是基于基于之前的两篇博客 [Vespa 索引结构实现](https://inhzus.io/posts/2024-12-04-vespa-index-impl/)、[Vespa 索引检索实现](https://inhzus.io/posts/2024-12-05-vespa-match-impl/) 重新梳理的、自上而下的、更易懂的 Vespa Matching 的介绍，用于本人分享。
+本文是基于基于之前的两篇博客 [Vespa 索引结构实现](https://zunish.io/posts/2024-12-04-vespa-index-impl/)、[Vespa 索引检索实现](https://zunish.io/posts/2024-12-05-vespa-match-impl/) 重新梳理的、自上而下的、更易懂的 Vespa Matching 的介绍，用于本人分享。
 
 Vespa 是由 Yahoo 开发的高性能大数据检索引擎，专为大规模低延迟的场景设计，支持文本、结构化数据、向量的检索。
 

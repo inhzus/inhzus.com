@@ -8,7 +8,7 @@ title: "About"
 
 ## 关于我
 
-2000 年出生，本科毕业于南大计科，目前在杭州生活。可见我的[简历](https://inhzus.io/posts/resume/)。
+2000 年出生，本科毕业于南大计科，目前在杭州生活。可见我的[简历](https://zunish.io/posts/resume/)。
 
 ## 联系我
 
