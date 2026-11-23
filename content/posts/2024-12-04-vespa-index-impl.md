@@ -29,7 +29,7 @@ extra:
 
 会构建如下所示的倒排索引：
 
-<img src="https://image.inhzus.io/2025/05/edc41af049bb2d518884ba8abc07708b.png" alt="Inverted Index" style="zoom:30%;" />
+<img src="https://image.zunish.io/2025/05/edc41af049bb2d518884ba8abc07708b.png" alt="Inverted Index" style="zoom:30%;" />
 
 
 
@@ -43,7 +43,7 @@ PostingStore 是对 DataStore 这一 Vespa 通用容器的封装，向 DataStore
 
 #### 数据结构
 
-<img src="https://image.inhzus.io/2025/05/01268383cb0ccacc466b6189a183bd03.jpg" alt="posting-list.drawio.jpg" style="zoom:20%;" />
+<img src="https://image.zunish.io/2025/05/01268383cb0ccacc466b6189a183bd03.jpg" alt="posting-list.drawio.jpg" style="zoom:20%;" />
 
 通过 DataStore 提供的接口，PostingStore 持有了这一列所有倒排表，每个倒排表根据大小和配置的不同，使用不同的数据结构存储：
 
@@ -109,7 +109,7 @@ DataStore 是 Vespa 中的通用容器，向其中存储一段数据会得到一
 
 当通过 entry id 获取数据时，即是线性地，将 entry id 分为 buffer id 和 offset 即可定位至相应的数据。
 
-<img src="https://image.inhzus.io/2025/05/9e8ec6f5c769c76a7167f7fc05b030c7.png" alt="data-store.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/9e8ec6f5c769c76a7167f7fc05b030c7.png" alt="data-store.drawio.jpg" style="zoom:25%;" />
 
 ### ArrayStore
 
@@ -121,13 +121,13 @@ EnumStore 在使用了 DataStore 的基础上，可以使用 EnumStoreDictionary
 
 数据被直接地存储在 DataStore 中，而 EnumStoreDictionary 以这些存储的值为 key，value 中存储了其在 DataStore 中的 id 和对应的倒排表 id。
 
-<img src="https://image.inhzus.io/2025/05/e6972b20f88b5dcad442784f7b687268.png" alt="enum-store.drawio" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/e6972b20f88b5dcad442784f7b687268.png" alt="enum-store.drawio" style="zoom:25%;" />
 
 ### MultiValueMapping
 
 EnumStore 直接用于单值的存储与检索，为了支持多值字段，如 `array<int>`、`array<string>`、`weightedset<string>`，MultiValueMapping 基于 RCUVector 和 ArrayStore 构建了 local docId 到多值字段值的映射。
 
-<img src="https://image.inhzus.io/2025/05/b1876f511943dc9c5d2ba662b7812029.png" alt="multi-value-mapping.drawio.jpg" style="zoom:22%;" />
+<img src="https://image.zunish.io/2025/05/b1876f511943dc9c5d2ba662b7812029.png" alt="multi-value-mapping.drawio.jpg" style="zoom:22%;" />
 
 如上图所示，RCU Vector 以 docId 为序号，存储指向 ArrayStore 的 EntryRef。通过 EntryRef，能够获取到 ArrayStore 中存储的定长或变长的数组。
 
@@ -149,7 +149,7 @@ EnumStore 直接用于单值的存储与检索，为了支持多值字段，如 
 2. 单值或多值，如 int、string 为单值，array\<int\>、weightedSet\<string\> 为多值；
 3. 是否需要构建倒排，加速查询。
 
-<img src="https://image.inhzus.io/2025/05/fd2866b6f616cd276c04725c523790a3.png" alt="attribute-data-structures.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/fd2866b6f616cd276c04725c523790a3.png" alt="attribute-data-structures.drawio.jpg" style="zoom:25%;" />
 
 以上这张表中列出了不同类型会使用到的数据结构（不包括 tensor、predicate 等类型），具体实现请往下看。
 
@@ -159,23 +159,23 @@ EnumStore 直接用于单值的存储与检索，为了支持多值字段，如 
 
 单值、数字（也就是定长）、不构建倒排，只需要简单的 RCU Vector 即可。
 
-<img src="https://image.inhzus.io/2025/05/a03583fa56eca6f76839096aa5313581.png" alt="singlevalue-numeric-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/a03583fa56eca6f76839096aa5313581.png" alt="singlevalue-numeric-attribute.drawio.jpg" style="zoom:25%;" />
 
 ### SingleValue-String
 
 基于 SingleValue-Numeric，变长的字符串需要存储在额外的 EnumStore 中。
 
-<img src="https://image.inhzus.io/2025/05/485aebfb97cfaec519fc6885d79d5fc2.png" alt="singlevalue-string-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/485aebfb97cfaec519fc6885d79d5fc2.png" alt="singlevalue-string-attribute.drawio.jpg" style="zoom:25%;" />
 
 ### MultiValue-Numeric
 
 与 SingleValue-Numeric 不同，这里使用了 MultiValueMapping 直接地存储数组。
 
-<img src="https://image.inhzus.io/2025/05/47109fc0b896df6cff846eda335b219e.png" alt="multivalue-numeric-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/47109fc0b896df6cff846eda335b219e.png" alt="multivalue-numeric-attribute.drawio.jpg" style="zoom:25%;" />
 
 ### MultiValue-String
 
-<img src="https://image.inhzus.io/2025/05/815495acdce69a682377bf0f8b6a091e.png" alt="multivalue-string-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/815495acdce69a682377bf0f8b6a091e.png" alt="multivalue-string-attribute.drawio.jpg" style="zoom:25%;" />
 
 ### SingleValue-Numeric-FastSearch
 
@@ -183,21 +183,21 @@ FastSearch 即是要倒排，这里的话，即便值类型是定长的，依然
 
 在文档写入时，需要分别构建 DataStore，PostingStore 和基于这两者之上的 EnumStoreDictionary。
 
-<img src="https://image.inhzus.io/2025/05/a8fedb8434f57006c2b6bb157e80d15b.png" alt="singlevalue-numeric-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/a8fedb8434f57006c2b6bb157e80d15b.png" alt="singlevalue-numeric-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
 
 ### SingleValue-String-FastSearch
 
 单值、变长、fast-search 的实现与定长时的实现是一致的。
 
-<img src="https://image.inhzus.io/2025/05/068b9f24ac77f187f83f123faaefdfcc.png" alt="singlevalue-string-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/068b9f24ac77f187f83f123faaefdfcc.png" alt="singlevalue-string-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
 
 ### MultiValue-Numeric-FastSearch
 
-<img src="https://image.inhzus.io/2025/05/75dfd4966aa74574c08e862fe4448e85.png" alt="multivalue-numeric-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/75dfd4966aa74574c08e862fe4448e85.png" alt="multivalue-numeric-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
 
 ### MultiValue-String-FastSearch
 
-<img src="https://image.inhzus.io/2025/05/1a43e3615975a02bbb52acf960f9de73.png" alt="multivalue-string-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/1a43e3615975a02bbb52acf960f9de73.png" alt="multivalue-string-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
 
 ## Index
 
@@ -217,7 +217,7 @@ Memory index 的数据结构非常类似于 attribute 中的 MultiValue-String-F
 
 注意，下图中使用了类似于 attribute 的类名方便理解，实际实现中并非。
 
-<img src="https://image.inhzus.io/2025/05/b71c45990c3ae89db2ff748b81a95a48.png" alt="memory-index.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/b71c45990c3ae89db2ff748b81a95a48.png" alt="memory-index.drawio.jpg" style="zoom:25%;" />
 
 ### Disk Index
 
@@ -229,4 +229,4 @@ Memory index 的数据结构非常类似于 attribute 中的 MultiValue-String-F
 
 注意到事实上，尽管这些文件都在磁盘上，在内存足够的情况下，在我们内部的版本中，往往会 mmap 分配一块匿名内存，然后将这些文件全部映射至内存中。官方的版本提供了 populate 这一选项，也就是在 mmap 文件至内存时，尽量减少 page fault 的发生。
 
-<img src="https://image.inhzus.io/2025/05/168ba1dd58f7c561c919fa6eb67e807e.png" alt="disk-index.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/168ba1dd58f7c561c919fa6eb67e807e.png" alt="disk-index.drawio.jpg" style="zoom:25%;" />

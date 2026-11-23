@@ -60,7 +60,7 @@ else
 
 - 搜索直到无法找到下一个边界点或回到起点.
 
-![](https://image.inhzus.io/2025/05/86859b277d8f0af2d3f1baa06c64ed7b.jpeg)
+![](https://image.zunish.io/2025/05/86859b277d8f0af2d3f1baa06c64ed7b.jpeg)
 
 ### 细节
 
@@ -86,11 +86,11 @@ Canny 边缘检测算法在维基百科中的介绍已经非常全面了, 但一
 
 #### Pic A
 
-![](https://image.inhzus.io/2025/05/791dc3dd731b16f8cba6458aae2feb3d.jpeg)
+![](https://image.zunish.io/2025/05/791dc3dd731b16f8cba6458aae2feb3d.jpeg)
 
 #### Pic B
 
-![](https://image.inhzus.io/2025/05/e70e345e0121acebad95440048d51a22.png)
+![](https://image.zunish.io/2025/05/e70e345e0121acebad95440048d51a22.png)
 
 ### 实现
 

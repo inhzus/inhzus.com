@@ -25,7 +25,7 @@ The same lifetime question returns during a disk-index replacement, where a quer
 
 Suppose a reader holds generation 10 and has a reference to array A. The writer allocates array B, publishes its reference, and retires A at generation 10. It can then advance to generation 11. Array A stays on hold until the reader releases its guard and the reclamation boundary advances past 10.
 
-[![Timeline showing a reader holding generation 10 while the writer publishes array B and retires array A. A becomes reclaimable only after the guard is released and the oldest-used generation advances past 10.](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/generation-lifetime.svg)](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/generation-lifetime.svg)
+[![Timeline showing a reader holding generation 10 while the writer publishes array B and retires array A. A becomes reclaimable only after the guard is released and the oldest-used generation advances past 10.](https://image.zunish.io/posts/vespa-thread-safety-in-the-storage-engine/generation-lifetime.svg)](https://image.zunish.io/posts/vespa-thread-safety-in-the-storage-engine/generation-lifetime.svg)
 
 A slow reader delays this reclamation. During heavy updates, the writer may retire many more allocations before that reader finishes, increasing on-hold memory.
 
@@ -71,7 +71,7 @@ Compaction follows the same rule. Moving live data to another buffer does not im
 
 For the query walking our posting list, the old root still leads to usable nodes. Replaced nodes go on hold, just as array A did, until the reader no longer needs them.
 
-[![An existing reader retains an old frozen B-tree root and leaf. A newly published root points to a copied, updated leaf; both roots share an unchanged frozen subtree.](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/frozen-btree.svg)](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/frozen-btree.svg)
+[![An existing reader retains an old frozen B-tree root and leaf. A newly published root points to a copied, updated leaf; both roots share an unchanged frozen subtree.](https://image.zunish.io/posts/vespa-thread-safety-in-the-storage-engine/frozen-btree.svg)](https://image.zunish.io/posts/vespa-thread-safety-in-the-storage-engine/frozen-btree.svg)
 
 The memory index puts these steps together in `FieldIndex::commit()`:
 
@@ -216,7 +216,7 @@ The retained collection can still contain an active memory index. Queries use th
 
 In this flush, a disk index replaces the frozen memory index while unchanged sources remain shared. The old query keeps its original collection. Warmup, covered below, can delay the handover to the new one.
 
-[![Before a flush replacement, the current collection contains a frozen memory index, an active memory index, and an existing disk index. Afterwards, an old query retains that collection while new queries acquire a collection containing the disk replacement. Both collections share the active memory index and existing disk index.](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/collection-replacement.svg)](https://image.inhzus.io/posts/vespa-thread-safety-in-the-storage-engine/collection-replacement.svg)
+[![Before a flush replacement, the current collection contains a frozen memory index, an active memory index, and an existing disk index. Afterwards, an old query retains that collection while new queries acquire a collection containing the disk replacement. Both collections share the active memory index and existing disk index.](https://image.zunish.io/posts/vespa-thread-safety-in-the-storage-engine/collection-replacement.svg)](https://image.zunish.io/posts/vespa-thread-safety-in-the-storage-engine/collection-replacement.svg)
 
 Flush work copies the state it needs, performs disk work separately, and schedules the resulting state change on the master thread. If intervening changes make the prepared state unsuitable, the operation may need to retry with updated state.
 

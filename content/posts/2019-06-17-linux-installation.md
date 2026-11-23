@@ -90,6 +90,6 @@ XPS-9360 对 Linux 的兼容性是众所周知的，考虑到 Windows 的以下�
 
 最后附两张截图，几乎没有进行过显示上的配置。
 
-![](https://image.inhzus.io/2025/05/949f161c31f77cc0262d8bc347c7c157.png)
+![](https://image.zunish.io/2025/05/949f161c31f77cc0262d8bc347c7c157.png)
 
-![](https://image.inhzus.io/2025/05/640d32dd27c97d548fb207edaeb568f4.png)
+![](https://image.zunish.io/2025/05/640d32dd27c97d548fb207edaeb568f4.png)

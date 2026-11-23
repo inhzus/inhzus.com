@@ -42,7 +42,7 @@ In normal insertion, the highest level is drawn by [InvLogLevelGenerator][level-
 
 Node 5 is the entry point at level 2. The amber path shows the upper-level descent for query `(0.8, 0.9)`, which we will follow after unpacking the storage layout.
 
-[![Three graph levels: level 2 contains entry node 5; level 1 connects nodes 1 and 5; level 0 has bidirectional links 1–2, 1–3, 1–5, 2–4, 3–4, and 4–5. The highlighted search descends from node 5 at level 2, moves from 5 to 1 at level 1, and descends to node 1 at level 0.](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/graph-levels.svg)](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/graph-levels.svg)
+[![Three graph levels: level 2 contains entry node 5; level 1 connects nodes 1 and 5; level 0 has bidirectional links 1–2, 1–3, 1–5, 2–4, 3–4, and 4–5. The highlighted search descends from node 5 at level 2, moves from 5 to 1 at level 1, and descends to node 1 at level 0.](https://image.zunish.io/posts/vespa-hnsw-index-implementation/graph-levels.svg)](https://image.zunish.io/posts/vespa-hnsw-index-implementation/graph-levels.svg)
 
 The completed graph has reverse edges and stays within the link limits. During an update, a concurrent reader may see one direction change before the other.
 
@@ -83,7 +83,7 @@ For node 5, the first lookup reaches its three-entry level array. The second rea
 
 Those arrays give the query nodeids to visit. Calculating a distance requires a separate lookup of the corresponding vector in `TensorAttribute`.
 
-[![The node vector contains level references, with node 0 invalid. Node 5's EntryRef resolves to a three-entry level array. Its level 0, 1, and 2 references resolve to neighbor arrays [1, 4], [1], and [] respectively. TensorAttribute separately holds the vector (2, 2) for docid 5.](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/graph-storage.svg)](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/graph-storage.svg)
+[![The node vector contains level references, with node 0 invalid. Node 5's EntryRef resolves to a three-entry level array. Its level 0, 1, and 2 references resolve to neighbor arrays [1, 4], [1], and [] respectively. TensorAttribute separately holds the vector (2, 2) for docid 5.](https://image.zunish.io/posts/vespa-hnsw-index-implementation/graph-storage.svg)](https://image.zunish.io/posts/vespa-hnsw-index-implementation/graph-storage.svg)
 
 Across the example graph, 14 neighbor ids take 56 bytes. The full memory footprint also includes the node vector, level references, spare buffer capacity, allocator metadata, and retired storage awaiting reclamation.
 
@@ -122,7 +122,7 @@ At level 0, [search_layer_helper][search-layer] keeps a nearest-first candidate 
 
 For this example, assume the result collection holds two nodes, with no filter, no extra exploration slack, and no deadline reached:
 
-[![Level-0 search trace, showing nodeid and squared distance. Seed 1 puts 1 at 1.45 in both collections. Expanding 1 gives candidates and results 3 at 0.65 and 2 at 0.85. Expanding 3 gives candidates 4 at 0.05 and 2 at 0.85, but retains results 4 and 3. Expanding 4 leaves 2 queued. The search stops before expanding 2 because 0.85 exceeds the worst retained distance, 0.65; the results remain 4 and 3.](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/search-queues.svg)](https://image.inhzus.io/posts/vespa-hnsw-index-implementation/search-queues.svg)
+[![Level-0 search trace, showing nodeid and squared distance. Seed 1 puts 1 at 1.45 in both collections. Expanding 1 gives candidates and results 3 at 0.65 and 2 at 0.85. Expanding 3 gives candidates 4 at 0.05 and 2 at 0.85, but retains results 4 and 3. Expanding 4 leaves 2 queued. The search stops before expanding 2 because 0.85 exceeds the worst retained distance, 0.65; the results remain 4 and 3.](https://image.zunish.io/posts/vespa-hnsw-index-implementation/search-queues.svg)](https://image.zunish.io/posts/vespa-hnsw-index-implementation/search-queues.svg)
 
 After expanding node 3, the results contain 4 and 3, but node 2 is still queued for exploration. Expanding node 4 does not improve the results, so the search stops before expanding 2: its distance, 0.85, exceeds the worst retained distance, 0.65. Documents 4 and 3 happen to be the exact nearest neighbors here. On a larger graph, the search width limits exploration, and the result remains approximate.
 

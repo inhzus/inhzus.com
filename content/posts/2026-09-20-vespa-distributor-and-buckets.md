@@ -42,7 +42,7 @@ Both mappings use the distribution algorithm. The owner can handle operations fo
 
 The Put goes through D3 to the two storage copies. The diagram's rows only organize this flat cluster; in a grouped configuration, each row shown would instead hold a full dataset copy.
 
-[![Six nodes in two rows of three, with highlighted Put arrows from the container through owner D3 to bucket A's copies inside proton on nodes 0 and 1. Other components are muted. Each row contains sample buckets A through F once. In the flat cluster, rows only organize the drawing; in a grouped variant, each row represents one replica group holding a full dataset copy.](https://image.inhzus.io/posts/vespa-distributors-and-buckets/cluster-overview.svg)](https://image.inhzus.io/posts/vespa-distributors-and-buckets/cluster-overview.svg)
+[![Six nodes in two rows of three, with highlighted Put arrows from the container through owner D3 to bucket A's copies inside proton on nodes 0 and 1. Other components are muted. Each row contains sample buckets A through F once. In the flat cluster, rows only organize the drawing; in a grouped variant, each row represents one replica group holding a full dataset copy.](https://image.zunish.io/posts/vespa-distributors-and-buckets/cluster-overview.svg)](https://image.zunish.io/posts/vespa-distributors-and-buckets/cluster-overview.svg)
 
 ### BucketId
 
@@ -165,7 +165,7 @@ A split can be triggered while processing a Put, by a background size/count chec
 
 Suppose our bucket uses 16 bits and its location is `0x2717`. Both nodes 0 and 1 split their copy by one additional bit:
 
-[![A parent bucket with the low 16 bits 0x2717 splits into 17-bit children 0x02717 and 0x12717, distinguished by bit 16. On both replica nodes, the parent is replaced by both children, leaving two copies of each child.](https://image.inhzus.io/posts/vespa-distributors-and-buckets/bucket-split.svg)](https://image.inhzus.io/posts/vespa-distributors-and-buckets/bucket-split.svg)
+[![A parent bucket with the low 16 bits 0x2717 splits into 17-bit children 0x02717 and 0x12717, distinguished by bit 16. On both replica nodes, the parent is replaced by both children, leaving two copies of each child.](https://image.zunish.io/posts/vespa-distributors-and-buckets/bucket-split.svg)](https://image.zunish.io/posts/vespa-distributors-and-buckets/bucket-split.svg)
 
 The two children differ at bit 16, counting from zero. Each document goes to the child matching that bit in its full identifier.
 
@@ -193,7 +193,7 @@ If only D3 fails, both storage copies can remain on nodes 0 and 1. The new clust
 
 With storage placement unchanged, recovery requires rebuilding the owner's view of the bucket. Losing a storage copy requires document transfer as well:
 
-[![Before, transition, and recovered views for bucket A. A distributor-only failure transfers ownership from D3 to D5 through bucket metadata reports while copies remain on nodes 0 and 1. A storage-node failure leaves a surviving copy on node 1; the new ideal targets are nodes 1 and 2, and document synchronization restores the second copy on node 2.](https://image.inhzus.io/posts/vespa-distributors-and-buckets/failure-recovery.svg)](https://image.inhzus.io/posts/vespa-distributors-and-buckets/failure-recovery.svg)
+[![Before, transition, and recovered views for bucket A. A distributor-only failure transfers ownership from D3 to D5 through bucket metadata reports while copies remain on nodes 0 and 1. A storage-node failure leaves a surviving copy on node 1; the new ideal targets are nodes 1 and 2, and document synchronization restores the second copy on node 2.](https://image.zunish.io/posts/vespa-distributors-and-buckets/failure-recovery.svg)](https://image.zunish.io/posts/vespa-distributors-and-buckets/failure-recovery.svg)
 
 *Dashed arrows: metadata. Green arrow: document transfer.*
 

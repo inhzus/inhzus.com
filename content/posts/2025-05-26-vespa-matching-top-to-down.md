@@ -43,7 +43,7 @@ Vespa 是由 Yahoo 开发的高性能大数据检索引擎，专为大规模低�
 
 ### Searching Process
 
-![vespa.drawio](https://image.inhzus.io/2025/05/0994d1d4066ea3bdaca28287ff295bd1.svg)
+![vespa.drawio](https://image.zunish.io/2025/05/0994d1d4066ea3bdaca28287ff295bd1.svg)
 
 
 
@@ -67,7 +67,7 @@ Vespa 是由 Yahoo 开发的高性能大数据检索引擎，专为大规模低�
    4. 发送 fetch 请求至原 searchnode，填充字段、分数及其它调试信息；
 4. End
 
-![vespa-searching.drawio](https://image.inhzus.io/2025/05/31a6ea7714ac87a1f02619c29c93e44e.svg)
+![vespa-searching.drawio](https://image.zunish.io/2025/05/31a6ea7714ac87a1f02619c29c93e44e.svg)
 
 本文以下内容重点关注的内容在：
 
@@ -110,13 +110,13 @@ Vespa
 
 会构建如下所示的倒排索引：
 
-<img src="https://image.inhzus.io/2025/05/edc41af049bb2d518884ba8abc07708b.png" alt="Inverted Index" style="zoom:30%;" />
+<img src="https://image.zunish.io/2025/05/edc41af049bb2d518884ba8abc07708b.png" alt="Inverted Index" style="zoom:30%;" />
 
 ### Execution Plan
 
 上一节中已经提到，输入的 YQL 会在 QRS 上转换为 query tree，后在 searchnode 上转换为执行计划。如下图所示（此处简要看下，下边会详细展开）：
 
-<img src="https://image.inhzus.io/2025/05/4c288d82ebd3e0b48983c64db53d22a0.png" alt="match-macro-view.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/4c288d82ebd3e0b48983c64db53d22a0.png" alt="match-macro-view.jpg" style="zoom:25%;" />
 
 1. YQL => QueryTree：将用户输入转化为便于引擎处理的**语法树**，通常会进行优化，减少树的深度；
 2. QueryTree => Blueprint：即所谓的**逻辑执行计划**，若检索的字段有索引，此时已经定位到其拉链（posting list），于是可以确定每个叶子/中间节点 blueprint 的预估文档数量，进行进一步地剪枝、执行顺序优化（含向量检索的 pre/post filter）；
@@ -222,7 +222,7 @@ void AndNotSearch::doSeek(uint32_t docId) {
 
 将所有子 SearchIterator 按照其当前 docId 排序（数据结构大部分情况为最小堆），于是在推进儿子节点时，可以减少调用 `seek` 次数：
 
-<img src="https://image.inhzus.io/2025/05/caa7b30443c5cde3e7985bb68e6967f1.png" alt="weightedset-term-search.jpg" style="zoom: 33%;" />
+<img src="https://image.zunish.io/2025/05/caa7b30443c5cde3e7985bb68e6967f1.png" alt="weightedset-term-search.jpg" style="zoom: 33%;" />
 
 ### Optimization: weakAnd
 
@@ -242,7 +242,7 @@ ElasticSearch 也有类似实现：https://www.elastic.co/blog/faster-retrieval-
 
 在构建完整的 SearchIterator 树后，最后一步的优化是寻找子节点均为 bitvector 实现（取决于索引结构）的中间节点，于是可以利用 SIMD 加速 and / or / multi 的运算。
 
-<img src="https://image.inhzus.io/2025/05/e1ed671960df585b388e0738af1e4e71.png" alt="multibitvector.jpg" style="zoom:33%;" />
+<img src="https://image.zunish.io/2025/05/e1ed671960df585b388e0738af1e4e71.png" alt="multibitvector.jpg" style="zoom:33%;" />
 
 ## Term
 
@@ -279,21 +279,21 @@ Attribute 在内存中的列式存储便于：
 
 单机 10M 文档，只需要 10M x 4 Byte = 40 MiB。
 
-<img src="https://image.inhzus.io/2025/05/a03583fa56eca6f76839096aa5313581.png" alt="singlevalue-numeric-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/a03583fa56eca6f76839096aa5313581.png" alt="singlevalue-numeric-attribute.drawio.jpg" style="zoom:25%;" />
 
 
 
 对于单值、不定长、无倒排，变长的字符串需要存储在额外的 EnumStore 中：
 
-<img src="https://image.inhzus.io/2025/05/485aebfb97cfaec519fc6885d79d5fc2.png" alt="singlevalue-string-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/485aebfb97cfaec519fc6885d79d5fc2.png" alt="singlevalue-string-attribute.drawio.jpg" style="zoom:25%;" />
 
 多值、不定长、无倒排，每个 docId 先指向在 ArrayStore 中存储的数组，再指向 EnumStore 中的变长值。
 
-<img src="https://image.inhzus.io/2025/05/815495acdce69a682377bf0f8b6a091e.png" alt="multivalue-string-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/815495acdce69a682377bf0f8b6a091e.png" alt="multivalue-string-attribute.drawio.jpg" style="zoom:25%;" />
 
 于是，当 SearchIterator 在该字段上检索 seek 至某个 docId 后，取出其值进行匹配即可：
 
-<img src="https://image.inhzus.io/2025/05/ca35d93615d67b2784b942deb3b0d95f.png" alt="match-attribute" style="zoom: 25%;" />
+<img src="https://image.zunish.io/2025/05/ca35d93615d67b2784b942deb3b0d95f.png" alt="match-attribute" style="zoom: 25%;" />
 
 简单的代码如下：
 
@@ -323,7 +323,7 @@ int32_t find(DocId doc, int32_t elemId) const {
 
 当有倒排时，在构建 Blueprint 时，既可通过词典（dictionary）定位至拉链（posting list），SearchIterator 在拉链上线性地推进。
 
-<img src="https://image.inhzus.io/2025/05/068b9f24ac77f187f83f123faaefdfcc.png" alt="singlevalue-string-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/068b9f24ac77f187f83f123faaefdfcc.png" alt="singlevalue-string-fastsearch-attribute.drawio.jpg" style="zoom:25%;" />
 
 ```C++
 void AttributePostingListIteratorT::doSeek(uint32_t docId) {
@@ -347,7 +347,7 @@ void AttributePostingListIteratorT::doSeek(uint32_t docId) {
 
 于是，一个简单的 term query，构建的 Blueprint 会变成：
 
-<img src="https://image.inhzus.io/2025/05/04ad764a82d135f235d798bb76bc1027.png" alt="match-index-blueprint.jpg" style="zoom: 33%;" />
+<img src="https://image.zunish.io/2025/05/04ad764a82d135f235d798bb76bc1027.png" alt="match-index-blueprint.jpg" style="zoom: 33%;" />
 
 下边具体展开每项阐述。
 
@@ -358,7 +358,7 @@ void AttributePostingListIteratorT::doSeek(uint32_t docId) {
 1. 不需要另外存储全量数据，于是没有 DocumentVector 和 MultiValueMapping；
 2. 经过 tokenizing 的文本，会带有如词频、位置等信息，用于之后的 bm25、nativeRank 计算，故会有额外的 FeatureStore 数据结构存储这些特征信息，在 PostingStore 中成对存储了 docId 和指向 FeatureStore 的 EntryRef。
 
-<img src="https://image.inhzus.io/2025/05/4da273fe9a47905b3c5bbac8ed86ac5d.png" alt="match-memory-index.jpg" style="zoom:33%;" />
+<img src="https://image.zunish.io/2025/05/4da273fe9a47905b3c5bbac8ed86ac5d.png" alt="match-memory-index.jpg" style="zoom:33%;" />
 
 #### Disk Index
 
@@ -370,19 +370,19 @@ void AttributePostingListIteratorT::doSeek(uint32_t docId) {
 
 注意到事实上，尽管这些文件都在磁盘上，在内存足够的情况下，在我们内部的版本中，往往会 mmap 分配一块匿名内存，然后将这些文件全部映射至内存中。官方的版本提供了 populate 这一选项，也就是在 mmap 文件至内存时，尽量减少 page fault 的发生。
 
-<img src="https://image.inhzus.io/2025/05/168ba1dd58f7c561c919fa6eb67e807e.png" alt="disk-index.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/168ba1dd58f7c561c919fa6eb67e807e.png" alt="disk-index.drawio.jpg" style="zoom:25%;" />
 
 #### WhiteListBlueprint
 
 DocumentMetaStore 中以 BitVector 的形式存储正在使用的 local id（即下图中的 lid）空间，WhiteListBlueprint 会由此构建 `BitVectorIterator` ，筛选掉不存在的 doc id。
 
-<img src="https://image.inhzus.io/2025/05/8516334d6ea07ad291739a88cf7f737d.png" alt="whitelist-blueprint.jpg" style="zoom: 33%;" />
+<img src="https://image.zunish.io/2025/05/8516334d6ea07ad291739a88cf7f737d.png" alt="whitelist-blueprint.jpg" style="zoom: 33%;" />
 
 #### SourceBlenderBlueprint
 
 管理 index 时会存储如下图所示的 `SourceSelector`，其复用了 attribute 的数据结构。于是在 seek 每个 doc id 时，可以找到对应的 index。
 
-<img src="https://image.inhzus.io/2025/05/93ebf7c8f35283dd8d6aab8d9643b12e.png" alt="source-blender.jpg" style="zoom:33%;" />
+<img src="https://image.zunish.io/2025/05/93ebf7c8f35283dd8d6aab8d9643b12e.png" alt="source-blender.jpg" style="zoom:33%;" />
 
 ```C++
 // non-strict
@@ -436,7 +436,7 @@ DataStore 是 Vespa 中的通用容器，向其中存储一段数据会得到一
 
 当通过 entry id 获取数据时，即是线性地，将 entry id 分为 buffer id 和 offset 即可定位至相应的数据。
 
-<img src="https://image.inhzus.io/2025/05/9e8ec6f5c769c76a7167f7fc05b030c7.png" alt="data-store.drawio.jpg" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/9e8ec6f5c769c76a7167f7fc05b030c7.png" alt="data-store.drawio.jpg" style="zoom:25%;" />
 
 ### ArrayStore
 
@@ -448,13 +448,13 @@ EnumStore 在 DataStore 的基础上，用索引赋予了在这一系列数据�
 
 数据被直接地存储在 DataStore 中，而 EnumStoreDictionary 以这些存储的值为 key，value 中存储了其在 DataStore 中的 id 和对应的倒排表 id。
 
-<img src="https://image.inhzus.io/2025/05/e6972b20f88b5dcad442784f7b687268.png" alt="enum-store.drawio" style="zoom:25%;" />
+<img src="https://image.zunish.io/2025/05/e6972b20f88b5dcad442784f7b687268.png" alt="enum-store.drawio" style="zoom:25%;" />
 
 ### MultiValueMapping
 
 EnumStore 只能支持单值字段的存储与检索，为了支持多值字段，如 `array<int>`、`array<string>`、`weightedset<string>`，MultiValueMapping 基于 RCUVector 和 ArrayStore 构建了 local docId 到多值字段值的映射。
 
-<img src="https://image.inhzus.io/2025/05/b1876f511943dc9c5d2ba662b7812029.png" alt="multi-value-mapping.drawio.jpg" style="zoom:22%;" />
+<img src="https://image.zunish.io/2025/05/b1876f511943dc9c5d2ba662b7812029.png" alt="multi-value-mapping.drawio.jpg" style="zoom:22%;" />
 
 如上图所示，RCU Vector 以 docId 为序号，存储指向 ArrayStore 的 EntryRef。通过 EntryRef，能够获取到 ArrayStore 中存储的定长或变长的数组。
 
